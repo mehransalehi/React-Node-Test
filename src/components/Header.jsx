@@ -94,39 +94,13 @@ const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, fra
                 <div className="header-right_headerRight">
                     <div className="header-right_headerBalance"></div>
                     {isLogin ? (
-                        <div className="user-block">
-                            <div className="user-block">
-                                <div className="user-block">
-                                    <span className="user-block">
-                                        <span className="SVGInline SVG-component">
-                                            <img src={IconCurrency} />
-                                        </span>
-                                    </span>
-                                    <span className="user-block">{userBalance}</span>
-                                    <span className="user-block">ARS</span>
-                                </div>
-                            </div>
-                            <div className="user-block">
-                                <div className="user-block">
-                                    <span className="user-block" onClick={openMenu}>
-                                        <span className="SVGInline SVG-component">
-                                            <img src={IconProfile} />
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="user-block">
-                                <div className="user-block">
-                                    <span
-                                        className="user-block"
-                                        onClick={handleLogoutClick}
-                                    >
-                                        <span className="SVGInline SVG-component">
-                                            <img src={IconLogout} alt="Logout icon" />
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
+                        <div class="header-right_headerRightUser">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
+                                <path fill="#fff" d="M10 0a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 12.5c5.525 0 10 2.238 10 5V20H0v-2.5c0-2.762 4.475-5 10-5"></path>
+                            </svg>
+                            <span class="header-right_unreadNotificationCounter">
+                                <div class="notifications-counter_notificationsCounter header-right_unreadCounter notifications-counter_sm" data-sentry-component="NotificationsCounter" data-sentry-source-file="notifications-counter.tsx"><span class="notifications-counter_notificationCounter">1</span></div>
+                            </span>
                         </div>
                     ) : (
                         <div className="header-right_headerRight">
