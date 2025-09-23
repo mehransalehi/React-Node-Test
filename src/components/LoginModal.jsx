@@ -124,7 +124,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                             </div>
                             <div className="sign-in-desktop__button">
                                 <button type="submit" className="button-desktop button-desktop_color_default">
-                                    <span className="sign-in-desktop__button-text">Acceder</span>
+                                    <span className="sign-in-desktop__button-text">Login</span>
                                 </button>
                             </div>
                         </form>

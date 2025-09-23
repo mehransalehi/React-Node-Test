@@ -49,7 +49,7 @@ const MobileSidebar = ({ isOpen, onToggle, isLogin }) => {
                     ) : (
                         <a className="header-mobile__button" href="/login">
                             <div className="button-mobile button-mobile_color_default">
-                                <span className="header-mobile__button-text">Acceder</span>
+                                <span className="header-mobile__button-text">Login</span>
                             </div>
                         </a>
                     )

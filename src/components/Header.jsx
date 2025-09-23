@@ -1,6 +1,5 @@
 import { useState } from "react";
 import UserMenu from "../components/UserMenu";
-import LanguageSelector from "../components/LanguageSelector";
 import NavLinkHeader from "../components/NavLinkHeader";
 import ImgLogo from "/src/assets/img/logo.png";
 import IconCurrency from "/src/assets/svg/currency.svg";
@@ -14,86 +13,83 @@ const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, fra
     };
 
     return (
-        <header className="header-desktop">
-            <div className="header-desktop__content">
-                <div className="header-desktop__header-menu">
+        <header className="header_header">
+            <div className="header_headerInner">
+                <div className="header_headerLeftContent">
                     <a className="header-desktop__logo-container" href="/">
-                        <div className="header-desktop__logo">
-                            <img
-                                title="Casino"
-                                alt="Casino"
-                                src={ImgLogo}
-                                className="logo-domain"
-                            />
-                        </div>
+                        <img
+                            title="Casino"
+                            alt="Casino"
+                            src={ImgLogo}
+                            className="logo-domain"
+                        />
                     </a>
-                    <nav className="header-main-menu-desktop">
-                        {
-                            isLogin
-                                ? fragmentNavLinksTop
-                                : <>
-                                    {
-                                        isSlotsOnly === "" ? 
-                                        <>
-                                            <NavLinkHeader
-                                                title="Inicio"
-                                                pageCode="home"
-                                                icon=""
-                                            />
-                                            <NavLinkHeader
-                                                title="Deporte"
-                                                pageCode="sports"
-                                                icon=""
-                                            />
-                                            <NavLinkHeader
-                                                title="Casino"
-                                                pageCode="casino"
-                                                icon=""
-                                            />
-                                            <NavLinkHeader
-                                                title="Casino en vivo"
-                                                pageCode="casinolive"
-                                                icon=""
-                                            />
-                                        </> : isSlotsOnly === "false" ? 
-                                        <>
-                                            <NavLinkHeader
-                                                title="Inicio"
-                                                pageCode="home"
-                                                icon=""
-                                            />
-                                            <NavLinkHeader
-                                                title="Deporte"
-                                                pageCode="sports"
-                                                icon=""
-                                            />
-                                            <NavLinkHeader
-                                                title="Casino"
-                                                pageCode="casino"
-                                                icon=""
-                                            />
-                                            <NavLinkHeader
-                                                title="Casino en vivo"
-                                                pageCode="casinolive"
-                                                icon=""
-                                            />
-                                        </> :
-                                        <>
-                                            <NavLinkHeader
-                                                title="Inicio"
-                                                pageCode="home"
-                                                icon=""
-                                            />
-                                            <NavLinkHeader
-                                                title="Casino"
-                                                pageCode="casino"
-                                                icon=""
-                                            />
-                                        </>
-                                        }
-                                    </>
-                        }
-                    </nav>
+                </div>
+                <div className="header_headerLinks">
+                    {
+                        isLogin ? fragmentNavLinksTop :
+                        <>
+                            {
+                                isSlotsOnly === "" ?
+                                <>
+                                    <NavLinkHeader
+                                        title="Home"
+                                        pageCode="home"
+                                        icon=""
+                                    />
+                                    <NavLinkHeader
+                                        title="Casino"
+                                        pageCode="casino"
+                                        icon=""
+                                    />
+                                    <NavLinkHeader
+                                        title="Live Casino"
+                                        pageCode="casinolive"
+                                        icon=""
+                                    />
+                                    <NavLinkHeader
+                                        title="Sport"
+                                        pageCode="sports"
+                                        icon=""
+                                    />
+                                </> : isSlotsOnly === "false" ?
+                                <>
+                                    <NavLinkHeader
+                                        title="Home"
+                                        pageCode="home"
+                                        icon=""
+                                    />
+                                    <NavLinkHeader
+                                        title="Casino"
+                                        pageCode="casino"
+                                        icon=""
+                                    />
+                                    <NavLinkHeader
+                                        title="Live Casino"
+                                        pageCode="casinolive"
+                                        icon=""
+                                    />
+                                    <NavLinkHeader
+                                        title="Sport"
+                                        pageCode="sports"
+                                        icon=""
+                                    />
+                                </> :
+                                <>
+                                    <NavLinkHeader
+                                        title="Home"
+                                        pageCode="home"
+                                        icon=""
+                                    />
+                                    <NavLinkHeader
+                                        title="Casino"
+                                        pageCode="casino"
+                                        icon=""
+                                    />
+                                </>
+                            }
+                        </>
+                    }
                 </div>
                 <div className="header-desktop__right">
                     <div className="user-block">
@@ -140,15 +136,13 @@ const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, fra
                                         className="button-desktop button-desktop_color_default"
                                         onClick={handleLoginClick}
                                     >
-                                        <span className="header-login-block-desktop__button-text">Acceder</span>
+                                        <span className="header-login-block-desktop__button-text">Login</span>
                                     </button>
                                 </div>
                             </div>
                         )}
                         {showUserMenu && <UserMenu handleLogoutClick={handleLogoutClick} />}
                     </div>
-                    <div className="header-desktop__separator"></div>
-                    <LanguageSelector />
                 </div>
             </div>
         </header>

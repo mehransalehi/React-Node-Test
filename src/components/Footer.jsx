@@ -9,10 +9,10 @@ const Footer = () => {
                 <nav className="footer__nav-links">
                     <div className="footer__menu-container">
                         <a className="footer__menu-item" href="/">
-                            <span className="footer__menu-description">Inicio</span>
+                            <span className="footer__menu-description">Home</span>
                         </a>
                         <a className="footer__menu-item" href="/sports">
-                            <span className="footer__menu-description">Deporte</span>
+                            <span className="footer__menu-description">Sport</span>
                         </a>
                     </div>
                     <div className="footer__menu-container">
@@ -20,7 +20,7 @@ const Footer = () => {
                             <span className="footer__menu-description">Casino</span>
                         </a>
                         <a className="footer__menu-item" href="/casinolive">
-                            <span className="footer__menu-description">Casino en vivo</span>
+                            <span className="footer__menu-description">Live Casino</span>
                         </a>
                     </div>
                     <div className="footer__menu-container">

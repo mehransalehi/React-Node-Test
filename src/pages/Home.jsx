@@ -271,7 +271,7 @@ const Home = () => {
                       </span>
                     </div>
                     <div className="home-sports-menu-desktop__title-block">
-                      <span className="home-sports-menu-desktop__title">Digitain Deporte</span>
+                      <span className="home-sports-menu-desktop__title">Digitain Sport</span>
                     </div>
                   </a>
                 </div>
@@ -303,7 +303,7 @@ const Home = () => {
                       </span>
                     </div>
                     <div className="home-sports-menu-desktop__title-block">
-                      <span className="home-sports-menu-desktop__title">ULTIM8 Deporte</span>
+                      <span className="home-sports-menu-desktop__title">ULTIM8 Sport</span>
                     </div>
                   </a>
                 </div>
@@ -383,7 +383,7 @@ const Home = () => {
                       </span>
                     </div>
                     <div className="home-sports-menu-mobile__title-block">
-                      <span className="home-sports-menu-mobile__title">Digitain Deporte</span>
+                      <span className="home-sports-menu-mobile__title">Digitain Sport</span>
                     </div>
                   </a>
                 </div>
@@ -411,7 +411,7 @@ const Home = () => {
                       </span>
                     </div>
                     <div className="home-sports-menu-mobile__title-block">
-                      <span className="home-sports-menu-mobile__title">ULTIM8 Deporte</span>
+                      <span className="home-sports-menu-mobile__title">ULTIM8 Sport</span>
                     </div>
                   </a>
                 </div>
@@ -421,7 +421,7 @@ const Home = () => {
                   <span className="SVGInline home-links-mobile__sub-item-icon">
                     <img className="SVGInline-svg home-links-mobile__sub-item-icon-svg" src={IconYellowDeporte} />
                   </span>
-                  <span className="home-links-mobile__sub-item-text">Deporte</span>
+                  <span className="home-links-mobile__sub-item-text">Sport</span>
                 </a>
                 <a className="home-links-mobile__sub-item" href="/casino">
                   <span className="SVGInline home-links-mobile__sub-item-icon">
@@ -436,7 +436,7 @@ const Home = () => {
                   <span className="SVGInline home-links-mobile__sub-item-icon">
                     <img className="SVGInline-svg home-links-mobile__sub-item-icon-svg" src={IconYellowLiveCasino} />
                   </span>
-                  <span className="home-links-mobile__sub-item-text">Casino en vivo</span>
+                  <span className="home-links-mobile__sub-item-text">Live Casino</span>
                 </a>
               </div>
             </div>

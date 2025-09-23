@@ -20,7 +20,7 @@ const MobileFooter = ({ isSlotsOnly }) => {
                     <span className="SVGInline main-mobile-menu__menu-icon">
                         <img className="SVGInline-svg main-mobile-menu__menu-icon-svg" src={IconSport} alt="sport" />
                     </span>
-                    <span className="main-mobile-menu__menu-text">Deporte</span>
+                    <span className="main-mobile-menu__menu-text">Sport</span>
                 </a>
                 <div className="main-mobile-menu__menu-item">
                     <img className="main-mobile-menu__menu-active" src={ImgActive} alt="" />
@@ -32,7 +32,7 @@ const MobileFooter = ({ isSlotsOnly }) => {
                 <a className="main-mobile-menu__menu-item" href="/">
                     <img className="main-mobile-menu__menu-active" src={ImgActive} alt="" />
                     <div className="main-mobile-menu__menu-icon-container"></div>
-                    <span className="main-mobile-menu__menu-text">Inicio</span>
+                    <span className="main-mobile-menu__menu-text">Home</span>
                 </a>
                 <a className="main-mobile-menu__menu-item main-mobile-menu__menu-item_active" href="/casino">
                     <img className="main-mobile-menu__menu-active main-mobile-menu__menu-active_active" src={ImgActive} alt="" />
@@ -50,7 +50,7 @@ const MobileFooter = ({ isSlotsOnly }) => {
                             <img className="SVGInline-svg main-mobile-menu__menu-icon-svg" src={IconLiveCasino} alt="live casino" />
                         </span>
                     </div>
-                    <span className="main-mobile-menu__menu-text">Casino en vivo</span>
+                    <span className="main-mobile-menu__menu-text">Live Casino</span>
                 </a>
             </nav>
         </div>
