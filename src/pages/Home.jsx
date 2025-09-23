@@ -23,6 +23,9 @@ import ImgCrash from "/src/assets/img/crash.avif";
 import IconAnimals from "/src/assets/svg/animals.svg";
 import ImgMegaways from "/src/assets/img/megaways.avif";
 import ImgRoulette from "/src/assets/img/roulette.webp";
+import ImgPromoCasino from "/src/assets/img/casino-promo.avif";
+import ImgPromoLiveCasino from "/src/assets/img/live-casino-promo.avif";
+import ImgPromoSport from "/src/assets/img/sport-promo.avif";
 
 let selectedGameId = null;
 let selectedGameType = null;
@@ -40,6 +43,8 @@ const Home = () => {
   const [selectedPage, setSelectedPage] = useState("lobby");
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const [games, setGames] = useState([]);
+  const [topGames, setTopGames] = useState([]);
+  const [topLiveCasino, setTopLiveCasino] = useState([]);
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState({});
   const [pageData, setPageData] = useState({});
@@ -66,6 +71,12 @@ const Home = () => {
     { name: "megaways", image: ImgMegaways },
     { name: "roulette", image: ImgRoulette }
   ];
+
+  const promos = [
+    { name: "casino", link: "/slots", image: ImgPromoCasino },
+    { name: "live casino", link: "/live-casino", image: ImgPromoLiveCasino },
+    { name: "sport", link: "/sport", image: ImgPromoSport }
+  ]
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -95,9 +106,7 @@ const Home = () => {
     setSelectedPage("home");
     getPage("home");
 
-    if (contextData.session != null) {
-      getStatus();
-    }
+    getStatus();
   }, [location.pathname]);
 
   useEffect(() => { }, [selectedPage]);
@@ -110,6 +119,8 @@ const Home = () => {
     if (result.status === 500 || result.status === 422) {
       setMessageCustomAlert(["error", result.message]);
     } else {
+      setTopGames(result.top_slot);
+      setTopLiveCasino(result.top_livecasino);
       contextData.slots_only = result && result.slots_only;
       setIsSlotsOnly(contextData.slots_only ? "true" : "false");
     }
@@ -314,75 +325,100 @@ const Home = () => {
             categories.length > 0 && <CategorySlideshow categories={categories} />
           }
 
-          
-
-          {/* <div className="providers-carousel_providersCarouselContainer__EQ3va">
-            <div className="swiper swiper-initialized swiper-horizontal providers-carousel_swiper__ShIo0">
-              <div className="swiper-wrapper">
-                <div className="swiper-slide">
-                  <div className="providers-carousel_providerItem__pvG4o">
-                    <div className="providers-carousel_providerItemIcon__l5OMp">
-                      <img alt="provider-item-icon" loading="lazy" width="20" height="20" decoding="async" src="" />
-                    </div>
-                  </div>
-                </div>
+          <div className="top-games">
+            <div className="games-block-title_gamesBlockTitle">
+              <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleLeft"></div>
+              <p className="games-block-title_gamesBlockTitleText">Top Games</p>
+              <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleRight"></div>
+            </div>
+            <div className="games-cards-suspensed_gameCardWrapper">
+              <div className="grid_grid grid_sm grid_rowMax3 games-cards-suspensed_gameCardListClassName">
+                {topGames &&
+                  topGames.map((item, index) => {
+                    let imageDataSrc = item.image_url;
+                    if (item.image_local != null) {
+                      imageDataSrc = contextData.cdnUrl + item.image_local;
+                    }
+                    return (
+                      <GameCard
+                        key={index}
+                        id={item.id}
+                        title={item.name}
+                        imageSrc={imageDataSrc}
+                        onClick={() =>
+                          isLogin
+                            ? launchGame(item.id, "slot", "tab")
+                            : isMobile
+                              ? navigate("/login")
+                              : handleLoginClick()
+                        }
+                      />
+                    );
+                  })}
               </div>
             </div>
-          </div> */}
+            <div className="games-cards-suspensed_seeMoreWrapper">
+              <a href="/casino">
+                <button className="button_button button_zeusPrimary button_md">See more</button>
+              </a>
+            </div>
+          </div>
 
-          {/* <div className="slots-main-desktop">
-            {firstFiveCategoriesGames.length > 0 && firstFiveCategoriesGames.map((categoryData, index) => (
-              categoryData && categoryData.games && categoryData.games.length > 0 ? (
-                <div key={index} className="slots-main-desktop">
-                  <div className="provider-section-desktop">
-                    <div className="provider-section-desktop">
-                      <div className="provider-section-desktop">
-                        <div className="provider-section-desktop">
-                          <span className="provider-section-desktop">
-                            {categoryData.category.name}
-                          </span>
-                        </div>
-                        <div className="provider-section-desktop"></div>
-                      </div>
-                      <div className="provider-section-desktop">
-                        <div className="carousel-arrows">
-                          <a className="carousel-arrows" href="/casino">
-                            <span className="carousel-arrows">Mostrar todo</span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="provider-section-desktop">
-                      {categoryData.games.slice(0, 8).map((game, gameIndex) => (
-                        <GameCard
-                          key={gameIndex}
-                          id={game.id}
-                          title={game.name}
-                          imageSrc={game.imageDataSrc || game.image_url || (game.image_local ? contextData.cdnUrl + game.image_local : "")}
-                          onClick={() =>
-                            isLogin
-                              ? launchGame(game.id, game.type, game.launcher)
-                              : isMobile
-                                ? navigate("/login")
-                                : handleLoginClick()
-                          }
-                        />
-                      ))}
-                    </div>
-                    {categoryData.games.length === 8 && (
-                      <div className="carousel-arrows">
-                        <a className="carousel-arrows" href={`/casino?category=${categoryData.category.id}`}>
-                          <span className="carousel-arrows">Ver más {categoryData.category.name}</span>
-                        </a>
-                      </div>
-                    )}
+          <div className="live-casino">
+            <div className="games-block-title_gamesBlockTitle">
+              <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleLeft"></div>
+              <p className="games-block-title_gamesBlockTitleText">Live Casino</p>
+              <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleRight"></div>
+            </div>
+            <div className="games-cards-suspensed_gameCardWrapper">
+              <div className="grid_grid grid_sm grid_rowMax3 games-cards-suspensed_gameCardListClassName">
+                {topLiveCasino &&
+                  topLiveCasino.map((item, index) => {
+                    let imageDataSrc = item.image_url;
+                    if (item.image_local != null) {
+                      imageDataSrc = contextData.cdnUrl + item.image_local;
+                    }
+                    return (
+                      <GameCard
+                        key={index}
+                        id={item.id}
+                        title={item.name}
+                        imageSrc={imageDataSrc}
+                        onClick={() =>
+                          isLogin
+                            ? launchGame(item.id, "slot", "tab")
+                            : isMobile
+                              ? navigate("/login")
+                              : handleLoginClick()
+                        }
+                      />
+                    );
+                  })}
+              </div>
+            </div>
+            <div className="games-cards-suspensed_seeMoreWrapper">
+              <a href="/casino">
+                <button className="button_button button_zeusPrimary button_md">See more</button>
+              </a>
+            </div>
+          </div>
+
+          <section className="promo-section_section">
+            {promos.map((promo, index) => (
+              <div className="promo-section_itemWrapper" key={index}>
+                <div className="promo-section_imageWrapper">
+                  <div className="promo-section_imageInner">
+                    <img loading="lazy" width={360} height={274} src={promo.image} />
                   </div>
                 </div>
-              ) : null
+                <div className="promo-section_buttonWrapper">
+                  <a href={promo.link}>
+                    <button className="button_button button_zeusPrimary button_sm">{promo.name}</button>
+                  </a>
+                </div>
+              </div>
             ))}
-
-            {isLoadingGames && <DivLoading />}
-          </div> */}
+          </section>
         </>
       )}
     </>
