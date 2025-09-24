@@ -3626,3 +3626,43 @@
     margin-top: -3px;
     width: 40px;
 }
+
+.no-game {
+    text-align: center;
+    background: url("../assets/img/403-img.jpg") no-repeat 40% 30%;
+    width: 100%;
+    height: 100%;
+}
+
+.leftWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 960px;
+    height: 100%;
+    padding: 50px;
+    background: #0f0f0f;
+}
+
+.forbiddenNumber {
+    font-weight: 700;
+    font-size: 240px;
+    line-height: 288px;
+    letter-spacing: 9.6px;
+}
+
+.forbiddenText {
+    font-size: 42px;
+    line-height: 51px;
+    letter-spacing: 0.53px;
+    text-transform: uppercase;
+}
+
+@media (orientation: landscape) {
+    .forbiddenNumber {
+        font-size: 10rem;
+        line-height: 10rem;
+    }
+}

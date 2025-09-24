@@ -11,7 +11,6 @@ import MobileFooter from "./MobileFooter";
 import NavLinkHeader from "../components/NavLinkHeader";
 import LoginModal from "./LoginModal";
 import LogoutConfirmModal from "./LogoutConfirmModal";
-import FullDivLoading from "./FullDivLoading";
 import { NavigationContext } from "./NavigationContext";
 import VerifyAgeModal from "../components/VerifyAgeModal";
 
@@ -25,7 +24,6 @@ const Layout = () => {
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [fragmentNavLinksTop, setFragmentNavLinksTop] = useState(<></>);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [showFullDivLoading, setShowFullDivLoading] = useState(false);
     const [showAgeModal, setShowAgeModal] = useState(false);
     const [isSlotsOnly, setIsSlotsOnly] = useState("");
     const navigate = useNavigate();
@@ -68,29 +66,25 @@ const Layout = () => {
 
     const refreshBalance = () => {
         setUserBalance("");
-        setShowFullDivLoading(true);
         callApi(contextData, "GET", "/get-user-balance", callbackRefreshBalance, null);
     };
 
     const callbackRefreshBalance = (result) => {
         setUserBalance(result && result.balance);
-        setShowFullDivLoading(false);
     };
 
     const getStatus = () => {
-        setShowFullDivLoading(true);
         callApi(contextData, "GET", "/get-status", callbackGetStatus, null);
     };
 
     const getPage = (page) => {
         setSelectedPage(page);
-        setShowFullDivLoading(true);
         callApi(contextData, "GET", "/get-page?page=" + page, callbackGetPage, null);
         navigate("/" + (page === "home" ? "" : page));
     };
 
-    const callbackGetPage = (result) => {
-        setShowFullDivLoading(false);
+    const callbackGetPage = () => {
+        
     };
 
     const callbackGetStatus = (result) => {
@@ -183,8 +177,7 @@ const Layout = () => {
         userBalance,
         handleLoginClick,
         handleLogoutClick,
-        refreshBalance,
-        setShowFullDivLoading,
+        refreshBalance
     };
 
     const handleAgeVerifyConfirm = () => {
@@ -195,7 +188,7 @@ const Layout = () => {
     return (
         <LayoutContext.Provider value={layoutContextValue}>
             <NavigationContext.Provider
-                value={{ fragmentNavLinksTop, selectedPage, setSelectedPage, getPage, showFullDivLoading, setShowFullDivLoading }}
+                value={{ fragmentNavLinksTop, selectedPage, setSelectedPage, getPage }}
             >
                 <VerifyAgeModal
                     isOpen={showAgeModal}
@@ -203,7 +196,6 @@ const Layout = () => {
                     onConfirm={handleAgeVerifyConfirm}
                 />
                 <div className="body-container fade-in">
-                    <FullDivLoading show={showFullDivLoading} />
                     {showLogoutModal && (
                         <LogoutConfirmModal onConfirm={handleLogoutConfirm} onCancel={handleLogoutCancel} />
                     )}
