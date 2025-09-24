@@ -44,7 +44,7 @@ const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, fra
                                     />
                                     <NavLinkHeader
                                         title="Live Casino"
-                                        pageCode="casinolive"
+                                        pageCode="live-casino"
                                         icon=""
                                     />
                                     <NavLinkHeader
@@ -66,7 +66,7 @@ const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, fra
                                     />
                                     <NavLinkHeader
                                         title="Live Casino"
-                                        pageCode="casinolive"
+                                        pageCode="live-casino"
                                         icon=""
                                     />
                                     <NavLinkHeader

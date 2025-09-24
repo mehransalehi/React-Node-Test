@@ -110,7 +110,7 @@ const Layout = () => {
                     />
                     <NavLinkHeader
                         title="Live Casino"
-                        pageCode="casinolive"
+                        pageCode="live-casino"
                         icon=""
                     />
                     <NavLinkHeader

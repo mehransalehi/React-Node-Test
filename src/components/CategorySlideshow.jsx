@@ -52,14 +52,13 @@ const CategorySlideshow = (props) => {
 
   return (
     <div className="providers-carousel_providersCarouselContainer" style={{ position: 'relative' }}>
-      {!isBeginning && (
-        <button
-          onClick={handlePrev}
-          className="providers-carousel_providerSlideIcon"
-        >
-          <img src={IconPrev} />
-        </button>
-      )}
+      <button
+        onClick={handlePrev}
+        className="providers-carousel_providerSlideIcon"
+        disabled={isBeginning ? true : false}
+      >
+        <img src={IconPrev} />
+      </button>
 
       <Swiper
         ref={swiperRef}
@@ -107,14 +106,13 @@ const CategorySlideshow = (props) => {
         ))}
       </Swiper>
 
-      {!isEnd && (
-        <button
-          onClick={handleNext}
-          className="providers-carousel_providerSlideIcon slider-next-button"
-        >
-          <img src={IconNext} />
-        </button>
-      )}
+      <button
+        onClick={handleNext}
+        className="providers-carousel_providerSlideIcon slider-next-button"
+        disabled={isEnd ? true : false}
+      >
+        <img src={IconNext} />
+      </button>
     </div>
   )
 }

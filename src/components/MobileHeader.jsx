@@ -102,7 +102,7 @@ const MobileHeader = ({ isLogin, userBalance, isOpen, handleLoginClick, onToggle
                                         </a>
                                     </div>
                                     <div className="links-menu-side-menu__items">
-                                        <a className="links-menu-side-menu__item" href={isSlotsOnly === "true" ? "#" : "/casinolive"}>
+                                        <a className="links-menu-side-menu__item" href={isSlotsOnly === "true" ? "#" : "/live-casino"}>
                                             <span className="SVGInline links-menu-side-menu__item-icon">
                                                 <img src={IconLiveCasino} className="SVGInline-svg links-menu-side-menu__item-icon-svg" />
                                             </span>

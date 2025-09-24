@@ -49,7 +49,6 @@ const Casino = () => {
   const [isLoadingGames, setIsLoadingGames] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isSlotsOnly, setIsSlotsOnly] = useState("");
   const [txtSearch, setTxtSearch] = useState("");
   const [searchDelayTimer, setSearchDelayTimer] = useState();
   const [messageCustomAlert, setMessageCustomAlert] = useState(["", ""]);
@@ -86,8 +85,8 @@ const Casino = () => {
     setGameUrl("");
     setShouldShowGameModal(false);
 
-    setSelectedPage("home");
-    getPage("home");
+    setSelectedPage("casino");
+    getPage("casino");
 
     getStatus();
   }, [location.pathname]);
@@ -176,7 +175,6 @@ const Casino = () => {
       setMessageCustomAlert(["error", result.message]);
     } else {
       contextData.slots_only = result && result.slots_only;
-      setIsSlotsOnly(contextData.slots_only ? "true" : "false");
       updateNavLinks();
     }
   };
@@ -408,7 +406,7 @@ const Casino = () => {
     setGames([]);
     setIsLoadingGames(true);
 
-    let pageSize = 15;
+    let pageSize = 20;
 
     let searchDelayTimerTmp = setTimeout(function () {
       callApi(

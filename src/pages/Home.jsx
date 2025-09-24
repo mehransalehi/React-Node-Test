@@ -43,14 +43,11 @@ const Home = () => {
   const [topGames, setTopGames] = useState([]);
   const [topLiveCasino, setTopLiveCasino] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [activeCategory, setActiveCategory] = useState({});
   const [pageData, setPageData] = useState({});
   const [gameUrl, setGameUrl] = useState("");
   const [fragmentNavLinksBody, setFragmentNavLinksBody] = useState(<></>);
-  const [isLoadingGames, setIsLoadingGames] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isSlotsOnly, setIsSlotsOnly] = useState("");
   const [messageCustomAlert, setMessageCustomAlert] = useState(["", ""]);
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
   const refGameModal = useRef();
@@ -181,7 +178,6 @@ const Home = () => {
       setTopGames(result.top_slot);
       setTopLiveCasino(result.top_livecasino);
       contextData.slots_only = result && result.slots_only;
-      setIsSlotsOnly(contextData.slots_only ? "true" : "false");
       updateNavLinks();
     }
   };
@@ -220,7 +216,6 @@ const Home = () => {
     if (categories.length > 0) {
       let item = categories[0];
       fetchContent(item, item.id, item.table_name, 0, false);
-      setActiveCategory(item);
     }
   }, [categories]);
 
@@ -233,7 +228,6 @@ const Home = () => {
 
   const fetchContent = (category, categoryId, tableName, categoryIndex, resetCurrentPage) => {
     let pageSize = 30;
-    setIsLoadingGames(true);
     // setShowFullDivLoading(true);
 
     if (resetCurrentPage == true) {
@@ -241,7 +235,6 @@ const Home = () => {
       setGames([]);
     }
 
-    setActiveCategory(category);
     setSelectedCategoryIndex(categoryIndex);
 
     callApiService(
@@ -275,7 +268,6 @@ const Home = () => {
       }
       pageCurrent += 1;
     }
-    setIsLoadingGames(false);
     setShowFullDivLoading(false);
   };
 

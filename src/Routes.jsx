@@ -20,7 +20,7 @@ export default function AppRoutes() {
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/casino" element={<Casino />} />
-                <Route path="/casinolive" element={<LiveCasino />} />
+                <Route path="/live-casino" element={<LiveCasino />} />
                 <Route path="/sports" element={<Sports />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/profile" element={<Profile />} />

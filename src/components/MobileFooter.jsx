@@ -43,7 +43,7 @@ const MobileFooter = ({ isSlotsOnly }) => {
                     </div>
                     <span className="main-mobile-menu__menu-text main-mobile-menu__menu-text_active">Casino</span>
                 </a>
-                <a className="main-mobile-menu__menu-item" href={isSlotsOnly === "true" ? "#" : "/casinolive"}>
+                <a className="main-mobile-menu__menu-item" href={isSlotsOnly === "true" ? "#" : "/live-casino"}>
                     <img className="main-mobile-menu__menu-active" src={ImgActive} alt="" />
                     <div className="main-mobile-menu__menu-icon-container">
                         <span className="SVGInline main-mobile-menu__menu-icon">
