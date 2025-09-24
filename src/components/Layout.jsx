@@ -206,35 +206,33 @@ const Layout = () => {
                             onConfirm={handleLoginConfirm}
                         />
                     )}
-                    <div className="body-scrollable">
-                        <div className="app__header-wrapper">
-                            <Header
-                                isLogin={isLogin}
-                                userBalance={userBalance}
-                                handleLoginClick={handleLoginClick}
-                                handleLogoutClick={handleLogoutClick}
-                                fragmentNavLinksTop={fragmentNavLinksTop}
-                                isSlotsOnly={isSlotsOnly}
-                            />
-                            <MobileHeader
-                                isLogin={isLogin}
-                                userBalance={userBalance}
-                                isOpen={isSidebarOpen}
-                                handleLoginClick={goLoginPage}
-                                onToggle={toggleSidebar}
-                                isSlotsOnly={isSlotsOnly}
-                            />
-                            <main className="app__main">
-                                <Outlet />
-                            </main>
-                            {
-                                isMobile && !isSportsPage ? <Footer isSportsPage={isSportsPage} /> :
-                                !isMobile ? <Footer isSportsPage={isSportsPage} /> : <></>
-                            }
-                            {
-                                !isSportsPage && <MobileFooter isSlotsOnly={isSlotsOnly} />
-                            }
-                        </div>
+                    <div className="app__header-wrapper">
+                        <Header
+                            isLogin={isLogin}
+                            userBalance={userBalance}
+                            handleLoginClick={handleLoginClick}
+                            handleLogoutClick={handleLogoutClick}
+                            fragmentNavLinksTop={fragmentNavLinksTop}
+                            isSlotsOnly={isSlotsOnly}
+                        />
+                        <MobileHeader
+                            isLogin={isLogin}
+                            userBalance={userBalance}
+                            isOpen={isSidebarOpen}
+                            handleLoginClick={goLoginPage}
+                            onToggle={toggleSidebar}
+                            isSlotsOnly={isSlotsOnly}
+                        />
+                        <main className="app__main">
+                            <Outlet />
+                        </main>
+                        {
+                            isMobile && !isSportsPage ? <Footer isSportsPage={isSportsPage} /> :
+                            !isMobile ? <Footer isSportsPage={isSportsPage} /> : <></>
+                        }
+                        {
+                            !isSportsPage && <MobileFooter isSlotsOnly={isSlotsOnly} />
+                        }
                     </div>
                 </div>
             </NavigationContext.Provider>

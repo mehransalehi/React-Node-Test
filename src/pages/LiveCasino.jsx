@@ -2,7 +2,6 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { LayoutContext } from "../components/LayoutContext";
-import { NavigationContext } from "../components/NavigationContext";
 import { callApi, callApiService } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import Slideshow from "../components/Slideshow";
@@ -29,7 +28,6 @@ const LiveCasino = () => {
   const pageTitle = "Live Casino";
   const { contextData } = useContext(AppContext);
   const { isLogin } = useContext(LayoutContext);
-  const { setShowFullDivLoading } = useContext(NavigationContext);
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const [games, setGames] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -127,13 +125,11 @@ const LiveCasino = () => {
 
   useEffect(() => {
     if (categories.length > 0) {
-      // Check for URL parameters first
       const urlParams = new URLSearchParams(location.search);
       const providerName = urlParams.get('provider');
       const providerId = urlParams.get('providerId');
 
       if (providerName && providerId) {
-        // Find the provider in categories
         const provider = categories.find(cat => cat.id.toString() === providerId.toString());
         if (provider) {
           const providerIndex = categories.indexOf(provider);
@@ -141,11 +137,10 @@ const LiveCasino = () => {
           setActiveCategory(provider);
           setSelectedCategoryIndex(providerIndex);
           fetchContent(provider, provider.id, provider.table_name, providerIndex, true);
-          return; // Exit early to prevent default category selection
+          return;
         }
       }
 
-      // Default behavior: select first category
       let item = categories[0];
       fetchContent(item, item.id, item.table_name, 0, false);
       setActiveCategory(item);
@@ -162,7 +157,6 @@ const LiveCasino = () => {
   const fetchContent = (category, categoryId, tableName, categoryIndex, resetCurrentPage) => {
     let pageSize = 30;
     setIsLoadingGames(true);
-    // setShowFullDivLoading(true);
 
     if (resetCurrentPage == true) {
       pageCurrent = 0;
@@ -211,7 +205,6 @@ const LiveCasino = () => {
       pageCurrent += 1;
     }
     setIsLoadingGames(false);
-    setShowFullDivLoading(false);
   };
 
   const configureImageSrc = (result) => {
@@ -225,7 +218,6 @@ const LiveCasino = () => {
   };
 
   const launchGame = (id, type, launcher) => {
-    setShowFullDivLoading(true);
     setShouldShowGameModal(true);
     selectedGameId = id != null ? id : selectedGameId;
     selectedGameType = type != null ? type : selectedGameType;
@@ -244,7 +236,6 @@ const LiveCasino = () => {
     } else if (result.status == "500" || result.status == "422") {
       setMessageCustomAlert(["error", result.message]);
     }
-    setShowFullDivLoading(false);
   };
 
   const closeGameModal = () => {

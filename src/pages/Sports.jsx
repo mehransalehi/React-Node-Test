@@ -60,11 +60,11 @@ const Sports = () => {
                 ) : (
                     <div className="game-iframe-view_gameIframeWrapper game-iframe-view_sportbook">
                         <div className="no-game">
-                            <div class="leftWrapper">
-                                <p class="forbiddenNumber">
+                            <div className="leftWrapper">
+                                <p className="forbiddenNumber">
                                     403
                                 </p>
-                                <p class="forbiddenText">
+                                <p className="forbiddenText">
                                     Forbidden: Access is denied.
                                     Sorry, your location is not covered by our service.
                                 </p>

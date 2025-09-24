@@ -2,7 +2,6 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { LayoutContext } from "../components/LayoutContext";
-import { NavigationContext } from "../components/NavigationContext";
 import { callApi, callApiService } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import NavLinkIcon from "../components/NavLinkIcon";
@@ -35,7 +34,6 @@ const Casino = () => {
   const pageTitle = "Casino";
   const { contextData } = useContext(AppContext);
   const { isLogin } = useContext(LayoutContext);
-  const { setShowFullDivLoading } = useContext(NavigationContext);
   const [selectedPage, setSelectedPage] = useState("lobby");
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const [games, setGames] = useState([]);
@@ -245,7 +243,6 @@ const Casino = () => {
   const fetchContent = (category, categoryId, tableName, categoryIndex, resetCurrentPage) => {
     let pageSize = 30;
     setIsLoadingGames(true);
-    // setShowFullDivLoading(true);
 
     if (resetCurrentPage == true) {
       pageCurrent = 0;
@@ -294,7 +291,6 @@ const Casino = () => {
       pageCurrent += 1;
     }
     setIsLoadingGames(false);
-    setShowFullDivLoading(false);
   };
 
   const configureImageSrc = (result) => {
@@ -308,7 +304,6 @@ const Casino = () => {
   };
 
   const launchGame = (id, type, launcher) => {
-    setShowFullDivLoading(true);
     setShouldShowGameModal(true);
     selectedGameId = id != null ? id : selectedGameId;
     selectedGameType = type != null ? type : selectedGameType;
@@ -327,7 +322,6 @@ const Casino = () => {
     } else if (result.status == "500" || result.status == "422") {
       setMessageCustomAlert(["error", result.message]);
     }
-    setShowFullDivLoading(false);
   };
 
   const closeGameModal = () => {
