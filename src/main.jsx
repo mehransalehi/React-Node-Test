@@ -7,11 +7,11 @@ import "bootstrap/dist/css/bootstrap-grid.css";
 import './css/Home.css'
 import './css/Poseidon.css'
 
-import './css/D.css'
-import './css/M.css'
+// import './css/D.css'
+// import './css/M.css'
 import './css/Ganamos.css'
-import './css/LiveCasino.css'
-import './css/Slot.css'
+// import './css/LiveCasino.css'
+// import './css/Slot.css'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(

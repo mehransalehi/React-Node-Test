@@ -92,22 +92,24 @@ const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, fra
                     }
                 </div>
                 <div className="header-right_headerRight">
-                    <div className="header-right_headerBalance"></div>
+                    <div className="header-right_headerBalance">{userBalance}</div>
                     {isLogin ? (
                         <div class="header-right_headerRightUser">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
                                 <path fill="#fff" d="M10 0a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 12.5c5.525 0 10 2.238 10 5V20H0v-2.5c0-2.762 4.475-5 10-5"></path>
                             </svg>
                             <span class="header-right_unreadNotificationCounter">
-                                <div class="notifications-counter_notificationsCounter header-right_unreadCounter notifications-counter_sm" data-sentry-component="NotificationsCounter" data-sentry-source-file="notifications-counter.tsx"><span class="notifications-counter_notificationCounter">1</span></div>
+                                <div class="notifications-counter_notificationsCounter header-right_unreadCounter notifications-counter_sm">
+                                    <span class="notifications-counter_notificationCounter">1</span>
+                                </div>
                             </span>
                         </div>
                     ) : (
                         <div className="header-right_headerRight">
                             <div className="header-right_headerBalance"></div>
                             <div className="header-right_guestRightMenu">
-                                <button className="button_button button_zeusPrimary button_xs" data-sentry-component="Button" data-sentry-source-file="button.tsx">Login</button>
-                                <button className="button_button button_ghost button_md header-right_burgerButton hidden md:flex" data-sentry-component="Button" data-sentry-source-file="button.tsx">
+                                <button className="button_button button_zeusPrimary button_xs" onClick={() => handleLoginClick()}>Login</button>
+                                <button className="button_button button_ghost button_md header-right_burgerButton hidden md:flex">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 25 25">
                                         <path fill="#fff" d="M3.019 18.582v-2h18v2zm0-5v-2h18v2zm0-5v-2h18v2z"></path>
                                     </svg>

@@ -1502,32 +1502,6 @@ html .swal2-icon.swal2-question .swal2-icon-content {
     }
 }
 
-.chat-with-us {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    z-index: 211;
-    height: 40px;
-}
-
-.chat-with-us>a {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-}
-
-.chat-with-us>a img {
-    width: 100%;
-    object-fit: cover;
-}
-
-@media (max-width: 768px) {
-    .chat-with-us {
-        bottom: 80px;
-        right: 5px;
-    }
-}
-
 footer {
     position: relative;
 }
@@ -6149,13 +6123,6 @@ hr.big {
     flex-grow: 2;
     min-height: 0;
     height: 100dvh
-}
-
-@media (min-width: 768px) {
-    .slide-out,
-    .profile-layout-mobile {
-        display:none
-    }
 }
 
 .bonus-program-button-mobile {
