@@ -366,6 +366,7 @@ const Home = () => {
               categories={categories}
               selectedCategoryIndex={selectedCategoryIndex}
               onCategoryClick={fetchContent}
+              pageType="home"
             /> : <DivLoading />
           }
 

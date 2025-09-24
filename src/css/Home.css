@@ -2624,6 +2624,10 @@
     color: #fff
 }
 
+.select-suffix_selectorSuffixIcon img {
+    filter: invert(1);
+}
+
 .select-suffix_selectorSuffixClear {
     margin-left: auto;
     color: #fff
@@ -2631,6 +2635,7 @@
 
 .select-suffix_selectorSuffixClear img {
     filter: invert(1);
+    width: 9px;
 }
 
 .select_select {

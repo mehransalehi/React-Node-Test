@@ -1,4 +1,5 @@
 import { useContext, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import CategoryButton from "../components/CategoryButton";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,6 +9,7 @@ import IconNext from "/src/assets/svg/swiper-next.svg";
 
 const CategorySlideshow = (props) => {
   const { contextData } = useContext(AppContext);
+  const navigate = useNavigate();
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -31,6 +33,21 @@ const CategorySlideshow = (props) => {
   const onSlideChange = (swiper) => {
     setIsBeginning(swiper.isBeginning);
     setIsEnd(swiper.isEnd);
+  };
+
+  const handleCategoryClick = (category, index) => {
+    if (props.pageType === 'home') {
+      // Navigate to casino with provider parameter
+      navigate(`/casino?provider=${encodeURIComponent(category.name)}&providerId=${category.id}`);
+    } else {
+      // Default casino behavior
+      if (props.onCategoryClick) {
+        props.onCategoryClick(category, category.id, category.table_name, index, true);
+      }
+      if (props.onCategorySelect) {
+        props.onCategorySelect(category);
+      }
+    }
   };
 
   return (
@@ -84,7 +101,7 @@ const CategorySlideshow = (props) => {
               name={category.name}
               icon={category.image_local != null && category.image_local !== "" ? contextData.cdnUrl + category.image_local : category.image_url}
               active={props.selectedCategoryIndex === index}
-              onClick={() => {props.onCategoryClick && props.onCategoryClick(category, category.id, category.table_name, index, true); props.onCategorySelect && props.onCategorySelect(category)}}
+              onClick={() => handleCategoryClick(category, index)}
             />
           </SwiperSlide>
         ))}

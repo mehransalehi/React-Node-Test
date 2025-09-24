@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../AppContext";
+import IconArrowDown from "/src/assets/svg/arrow-down.svg";
 import IconClose from "/src/assets/svg/close.svg";
 
 const SearchSelect = ({
@@ -49,7 +50,7 @@ const SearchSelect = ({
                                     {selectedProvider ? selectedProvider.name : "All Providers"}
                                 </span>
                             </span>
-                            {selectedProvider && selectedProvider.id && (
+                            {selectedProvider && selectedProvider.id ?
                                 <span
                                     className="select-suffix_selectorSuffixClear"
                                     role="button"
@@ -60,8 +61,11 @@ const SearchSelect = ({
                                     }}
                                 >
                                     <img src={IconClose} />
+                                </span> : 
+                                <span className="select-suffix_selectorSuffixIcon">
+                                    <img src={IconArrowDown} />
                                 </span>
-                            )}
+                            }
                         </button>
                         <div className={`select-options_selectOptions ${isProviderDropdownOpen ? 'select-options_shown' : ''}`}>
                             {categories && categories.map((provider, index) => (

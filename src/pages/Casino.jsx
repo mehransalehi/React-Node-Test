@@ -92,6 +92,7 @@ const Casino = () => {
     getStatus();
   }, [location.pathname]);
 
+
   useEffect(() => {
     updateNavLinks();
   }, [selectedPage]);
@@ -214,11 +215,30 @@ const Casino = () => {
 
   useEffect(() => {
     if (categories.length > 0) {
+      // Check for URL parameters first
+      const urlParams = new URLSearchParams(location.search);
+      const providerName = urlParams.get('provider');
+      const providerId = urlParams.get('providerId');
+
+      if (providerName && providerId) {
+        // Find the provider in categories
+        const provider = categories.find(cat => cat.id.toString() === providerId.toString());
+        if (provider) {
+          const providerIndex = categories.indexOf(provider);
+          setSelectedProvider(provider);
+          setActiveCategory(provider);
+          setSelectedCategoryIndex(providerIndex);
+          fetchContent(provider, provider.id, provider.table_name, providerIndex, true);
+          return; // Exit early to prevent default category selection
+        }
+      }
+
+      // Default behavior: select first category
       let item = categories[0];
       fetchContent(item, item.id, item.table_name, 0, false);
       setActiveCategory(item);
     }
-  }, [categories]);
+  }, [categories, location.search]);
 
   const loadMoreContent = () => {
     let item = categories[selectedCategoryIndex];
@@ -239,6 +259,7 @@ const Casino = () => {
 
     setActiveCategory(category);
     setSelectedCategoryIndex(categoryIndex);
+    setTxtSearch("");
 
     let apiUrl = "/games/?page_group_type=categories&page_group_code=" +
       pageData.page_group_code +
@@ -337,11 +358,13 @@ const Casino = () => {
   const handleCategorySelect = (category) => {
     setActiveCategory(category);
     setSelectedProvider(category);
+    setTxtSearch("");
   }
 
   const handleProviderSelect = (provider, index = 0) => {
     setSelectedProvider(provider);
     setIsProviderDropdownOpen(false);
+    setTxtSearch("");
     if (categories.length > 0 && provider) {
       setActiveCategory(provider);
       fetchContent(provider, provider.id, provider.table_name, index, true);
@@ -446,6 +469,7 @@ const Casino = () => {
               selectedCategoryIndex={selectedCategoryIndex}
               onCategoryClick={fetchContent}
               onCategorySelect={handleCategorySelect}
+              pageType="casino"
             /> : <DivLoading />
           }
 
