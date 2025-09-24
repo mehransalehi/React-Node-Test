@@ -5,6 +5,7 @@ import { LayoutContext } from "../components/LayoutContext";
 import { NavigationContext } from "../components/NavigationContext";
 import { callApi, callApiService } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
+import NavLinkIcon from "../components/NavLinkIcon";
 import Slideshow from "../components/Slideshow";
 import CategorySlideshow from "../components/CategorySlideshow";
 import GameModal from "../components/GameModal";
@@ -16,11 +17,8 @@ import ImgBanner1 from "/src/assets/img/slots.avif";
 import ImgBanner2 from "/src/assets/img/live-casino.avif";
 import ImgBanner3 from "/src/assets/img/sport.avif";
 import ImgLobby from "/src/assets/img/lobby.avif";
-import ImgNew from "/src/assets/img/new.avif";
-import ImgJokers from "/src/assets/img/jokers.avif";
 import ImgHot from "/src/assets/img/hot.avif";
 import ImgCrash from "/src/assets/img/crash.avif";
-import IconAnimals from "/src/assets/svg/animals.svg";
 import ImgMegaways from "/src/assets/img/megaways.avif";
 import ImgRoulette from "/src/assets/img/roulette.webp";
 import ImgPromoCasino from "/src/assets/img/casino-promo.avif";
@@ -38,7 +36,6 @@ const Home = () => {
   const pageTitle = "Home";
   const { contextData } = useContext(AppContext);
   const { isLogin } = useContext(LayoutContext);
-  const [activeIndex, setActiveIndex] = useState(0);
   const { setShowFullDivLoading } = useContext(NavigationContext);
   const [selectedPage, setSelectedPage] = useState("lobby");
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
@@ -49,6 +46,7 @@ const Home = () => {
   const [activeCategory, setActiveCategory] = useState({});
   const [pageData, setPageData] = useState({});
   const [gameUrl, setGameUrl] = useState("");
+  const [fragmentNavLinksBody, setFragmentNavLinksBody] = useState(<></>);
   const [isLoadingGames, setIsLoadingGames] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -61,19 +59,8 @@ const Home = () => {
 
   const imageSlideshow = [ImgBanner1, ImgBanner2, ImgBanner3];
 
-  const tags = [
-    { name: "lobby", image: ImgLobby },
-    { name: "new", image: ImgNew },
-    { name: "jokers", image: ImgJokers },
-    { name: "hot", image: ImgHot },
-    { name: "crash games", image: ImgCrash },
-    { name: "animals", image: IconAnimals },
-    { name: "megaways", image: ImgMegaways },
-    { name: "roulette", image: ImgRoulette }
-  ];
-
   const promos = [
-    { name: "casino", link: "/slots", image: ImgPromoCasino },
+    { name: "casino", link: "/casino", image: ImgPromoCasino },
     { name: "live casino", link: "/live-casino", image: ImgPromoLiveCasino },
     { name: "sport", link: "/sport", image: ImgPromoSport }
   ]
@@ -109,10 +96,82 @@ const Home = () => {
     getStatus();
   }, [location.pathname]);
 
-  useEffect(() => { }, [selectedPage]);
+  useEffect(() => {
+    updateNavLinks();
+  }, [selectedPage]);
 
   const getStatus = () => {
     callApi(contextData, "GET", "/get-status", callbackGetStatus, null);
+  };
+
+  const updateNavLinks = () => {
+    if ((contextData.slots_only == null) || (contextData.slots_only == false)) {
+      setFragmentNavLinksBody(
+        <>
+          <NavLinkIcon
+            title="Lobby"
+            pageCode="home"
+            icon={ImgLobby}
+            active={selectedPage === "home" || selectedPage === "lobby"}
+            onClick={() => getPage("home")}
+          />
+          <NavLinkIcon
+            title="Hot"
+            pageCode="hot"
+            icon={ImgHot}
+            active={selectedPage === "hot"}
+            onClick={() => getPage("hot")}
+          />
+          <NavLinkIcon
+            title="Habilidad"
+            pageCode="arcade"
+            icon={ImgCrash}
+            active={selectedPage === "arcade"}
+            onClick={() => getPage("arcade")}
+          />
+          <NavLinkIcon
+            title="Megaways"
+            pageCode="megaways"
+            icon={ImgMegaways}
+            active={selectedPage === "megaways"}
+            onClick={() => getPage("megaways")}
+          />
+          <NavLinkIcon
+            title="Ruleta"
+            pageCode="roulette"
+            icon={ImgRoulette}
+            active={selectedPage === "roulette"}
+            onClick={() => getPage("roulette")}
+          />
+        </>
+      );
+    } else {
+      setFragmentNavLinksBody(
+        <>
+          <NavLinkIcon
+            title="Lobby"
+            pageCode="home"
+            icon={ImgLobby}
+            active={selectedPage === "home" || selectedPage === "lobby"}
+            onClick={() => getPage("home")}
+          />
+          <NavLinkIcon
+            title="Hot"
+            pageCode="hot"
+            icon={ImgHot}
+            active={selectedPage === "hot"}
+            onClick={() => getPage("hot")}
+          />
+          <NavLinkIcon
+            title="Megaways"
+            pageCode="megaways"
+            icon={ImgMegaways}
+            active={selectedPage === "megaways"}
+            onClick={() => getPage("megaways")}
+          />
+        </>
+      );
+    }
   };
 
   const callbackGetStatus = (result) => {
@@ -123,6 +182,7 @@ const Home = () => {
       setTopLiveCasino(result.top_livecasino);
       contextData.slots_only = result && result.slots_only;
       setIsSlotsOnly(contextData.slots_only ? "true" : "false");
+      updateNavLinks();
     }
   };
 
@@ -297,32 +357,16 @@ const Home = () => {
 
           <div className="games-tags_gamesTags">
             <div className="games-tags_gamesTagsInner">
-              {tags.map((tag, index) => (
-                <button
-                  key={index}
-                  role="button"
-                  onClick={() => setActiveIndex(index)}
-                  className={`games-tags_gamesTag ${activeIndex === index ? "games-tags_active" : ""
-                    }`}
-                >
-                  <span className="games-tags_tagIconWrapper">
-                    <img
-                      alt={tag.name}
-                      loading="lazy"
-                      width="46"
-                      height="40"
-                      src={tag.image}
-                      style={{ color: "transparent" }}
-                    />
-                  </span>
-                  <span className="games-tags_gameTagLabel">{tag.name}</span>
-                </button>
-              ))}
+              {fragmentNavLinksBody}
             </div>
           </div>
 
           {
-            categories.length > 0 && <CategorySlideshow categories={categories} />
+            categories.length > 0 ? <CategorySlideshow
+              categories={categories}
+              selectedCategoryIndex={selectedCategoryIndex}
+              onCategoryClick={fetchContent}
+            /> : <DivLoading />
           }
 
           <div className="top-games">

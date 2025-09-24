@@ -1,5 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import { AppContext } from "../AppContext";
+import CategoryButton from "../components/CategoryButton";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import IconPrev from "/src/assets/svg/swiper-prev.svg";
@@ -78,22 +79,13 @@ const CategorySlideshow = (props) => {
       >
         {props.categories.map((category, index) => (
           <SwiperSlide key={`category-${category.id || index}`}>
-            <div className="providers-carousel_providerItem">
-              <div className="providers-carousel_providerItemIcon">
-                <img
-                  alt={`${category.name} icon`}
-                  loading="lazy"
-                  width="20"
-                  height="20"
-                  decoding="async"
-                  src={contextData.cdnUrl + category.image_local}
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                  }}
-                />
-              </div>
-              <span className="providers-carousel_providerItemLabel">{category.name}</span>
-            </div>
+            <CategoryButton
+              key={index}
+              name={category.name}
+              icon={category.image_local != null && category.image_local !== "" ? contextData.cdnUrl + category.image_local : category.image_url}
+              active={props.selectedCategoryIndex === index}
+              onClick={() => props.onCategoryClick && props.onCategoryClick(category, category.id, category.table_name, index, true)}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

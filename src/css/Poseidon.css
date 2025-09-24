@@ -692,13 +692,18 @@ ul li {
 }
 
 .providers-carousel_providerItemLabel {
-    height: 28px;
+    max-height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
     font-size: 11px;
-    line-height: 11px
+    line-height: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .providers-carousel_providerSlideIcon {
