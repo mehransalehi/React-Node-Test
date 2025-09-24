@@ -6,9 +6,9 @@ const CategoryButton = (props) => {
 
   return (
     <div className={customClass} onClick={props.onClick}>
-      {
-        props.icon && props.icon !== "" &&
-        <div className="providers-carousel_providerItemIcon">
+      <div className="providers-carousel_providerItemIcon">
+        {
+          props.icon && props.icon !== "" &&
           <img
             alt={props.name}
             loading="lazy"
@@ -20,8 +20,8 @@ const CategoryButton = (props) => {
               e.target.style.display = 'none';
             }}
           />
-        </div>
-      }
+        }
+      </div>
       <span className="providers-carousel_providerItemLabel">{props.name}</span>
     </div>
   );

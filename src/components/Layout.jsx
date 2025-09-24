@@ -104,11 +104,6 @@ const Layout = () => {
                         icon=""
                     />
                     <NavLinkHeader
-                        title="Sport"
-                        pageCode="sports"
-                        icon=""
-                    />
-                    <NavLinkHeader
                         title="Casino"
                         pageCode="casino"
                         icon=""
@@ -116,6 +111,11 @@ const Layout = () => {
                     <NavLinkHeader
                         title="Live Casino"
                         pageCode="casinolive"
+                        icon=""
+                    />
+                    <NavLinkHeader
+                        title="Sport"
+                        pageCode="sports"
                         icon=""
                     />
                 </>

@@ -1364,7 +1364,7 @@
     grid-template-rows: auto auto auto;
     gap: 0;
     overflow: hidden;
-    grid-auto-rows: 0
+    grid-auto-rows: auto
 }
 
 .grid_grid.grid_md {
@@ -1429,7 +1429,7 @@
 }
 
 .input-wrapper_inputWrapperFieldset.input-wrapper_hasLabel {
-    top: -10px
+    top: 0
 }
 
 .input-wrapper_inputWrapperFieldset,
@@ -1533,10 +1533,11 @@
     margin-right: 10px
 }
 
-.input-wrapper-prefix_inputWrapperPrefix svg {
+.input-wrapper-prefix_inputWrapperPrefix img {
     width: 24px;
     height: 24px;
-    color: hsla(0, 0%, 100%, .4)
+    color: hsla(0, 0%, 100%, .4);
+    filter: invert(1);
 }
 
 .input-wrapper-suffix_inputWrapperSuffix {
@@ -2626,6 +2627,10 @@
 .select-suffix_selectorSuffixClear {
     margin-left: auto;
     color: #fff
+}
+
+.select-suffix_selectorSuffixClear img {
+    filter: invert(1);
 }
 
 .select_select {

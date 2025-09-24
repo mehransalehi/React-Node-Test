@@ -84,7 +84,7 @@ const CategorySlideshow = (props) => {
               name={category.name}
               icon={category.image_local != null && category.image_local !== "" ? contextData.cdnUrl + category.image_local : category.image_url}
               active={props.selectedCategoryIndex === index}
-              onClick={() => props.onCategoryClick && props.onCategoryClick(category, category.id, category.table_name, index, true)}
+              onClick={() => {props.onCategoryClick && props.onCategoryClick(category, category.id, category.table_name, index, true); props.onCategorySelect && props.onCategorySelect(category)}}
             />
           </SwiperSlide>
         ))}
