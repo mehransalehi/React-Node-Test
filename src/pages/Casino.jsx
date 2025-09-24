@@ -213,13 +213,11 @@ const Casino = () => {
 
   useEffect(() => {
     if (categories.length > 0) {
-      // Check for URL parameters first
       const urlParams = new URLSearchParams(location.search);
       const providerName = urlParams.get('provider');
       const providerId = urlParams.get('providerId');
 
       if (providerName && providerId) {
-        // Find the provider in categories
         const provider = categories.find(cat => cat.id.toString() === providerId.toString());
         if (provider) {
           const providerIndex = categories.indexOf(provider);
@@ -227,11 +225,10 @@ const Casino = () => {
           setActiveCategory(provider);
           setSelectedCategoryIndex(providerIndex);
           fetchContent(provider, provider.id, provider.table_name, providerIndex, true);
-          return; // Exit early to prevent default category selection
+          return;
         }
       }
 
-      // Default behavior: select first category
       let item = categories[0];
       fetchContent(item, item.id, item.table_name, 0, false);
       setActiveCategory(item);

@@ -2,7 +2,6 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { LayoutContext } from "../components/LayoutContext";
-import { NavigationContext } from "../components/NavigationContext";
 import { callApi, callApiService } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import NavLinkIcon from "../components/NavLinkIcon";
@@ -10,6 +9,7 @@ import Slideshow from "../components/Slideshow";
 import CategorySlideshow from "../components/CategorySlideshow";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";
+import GamesLoading from "../components/GamesLoading";
 import LoginModal from "../components/LoginModal";
 import CustomAlert from "../components/CustomAlert";
 import "animate.css";
@@ -30,13 +30,10 @@ let selectedGameType = null;
 let selectedGameLauncher = null;
 let pageCurrent = 0;
 
-
-
 const Home = () => {
   const pageTitle = "Home";
   const { contextData } = useContext(AppContext);
   const { isLogin } = useContext(LayoutContext);
-  const { setShowFullDivLoading } = useContext(NavigationContext);
   const [selectedPage, setSelectedPage] = useState("lobby");
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const [games, setGames] = useState([]);
@@ -50,6 +47,7 @@ const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [messageCustomAlert, setMessageCustomAlert] = useState(["", ""]);
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
+  const [isLoadingGames, setIsLoadingGames] = useState(false);
   const refGameModal = useRef();
   const navigate = useNavigate();
   const location = useLocation();
@@ -175,6 +173,7 @@ const Home = () => {
     if (result.status === 500 || result.status === 422) {
       setMessageCustomAlert(["error", result.message]);
     } else {
+      setIsLoadingGames(false);
       setTopGames(result.top_slot);
       setTopLiveCasino(result.top_livecasino);
       contextData.slots_only = result && result.slots_only;
@@ -183,6 +182,7 @@ const Home = () => {
   };
 
   const getPage = (page) => {
+    setIsLoadingGames(true);
     setCategories([]);
     setGames([]);
     setSelectedPage(page);
@@ -228,7 +228,6 @@ const Home = () => {
 
   const fetchContent = (category, categoryId, tableName, categoryIndex, resetCurrentPage) => {
     let pageSize = 30;
-    // setShowFullDivLoading(true);
 
     if (resetCurrentPage == true) {
       pageCurrent = 0;
@@ -268,7 +267,7 @@ const Home = () => {
       }
       pageCurrent += 1;
     }
-    setShowFullDivLoading(false);
+    setIsLoadingGames(false);
   };
 
   const configureImageSrc = (result) => {
@@ -282,7 +281,6 @@ const Home = () => {
   };
 
   const launchGame = (id, type, launcher) => {
-    setShowFullDivLoading(true);
     setShouldShowGameModal(true);
     selectedGameId = id != null ? id : selectedGameId;
     selectedGameType = type != null ? type : selectedGameType;
@@ -301,7 +299,6 @@ const Home = () => {
     } else if (result.status == "500" || result.status == "422") {
       setMessageCustomAlert(["error", result.message]);
     }
-    setShowFullDivLoading(false);
   };
 
   const closeGameModal = () => {
@@ -394,6 +391,7 @@ const Home = () => {
                   })}
               </div>
             </div>
+            {isLoadingGames && <GamesLoading />}
             <div className="games-cards-suspensed_seeMoreWrapper">
               <a href="/casino">
                 <button className="button_button button_zeusPrimary button_md">See more</button>
@@ -433,8 +431,9 @@ const Home = () => {
                   })}
               </div>
             </div>
+            {isLoadingGames && <GamesLoading />}
             <div className="games-cards-suspensed_seeMoreWrapper">
-              <a href="/casino">
+              <a href="/live-casino">
                 <button className="button_button button_zeusPrimary button_md">See more</button>
               </a>
             </div>
