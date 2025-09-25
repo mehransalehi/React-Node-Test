@@ -351,7 +351,7 @@ const Home = () => {
           </div>
 
           {
-            categories.length > 0 ? <CategorySlideshow
+            categories.length == 0 ? <CategorySlideshow
               categories={categories}
               selectedCategoryIndex={selectedCategoryIndex}
               onCategoryClick={fetchContent}

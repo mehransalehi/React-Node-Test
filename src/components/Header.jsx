@@ -95,16 +95,18 @@ const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, fra
                         }
                     </div>
                     <div className="header-right_headerRight">
-                        <div className="header-right_headerBalance">{userBalance} $</div>
                         {isLogin ? (
-                            <div className="header-right_headerRightUser" onClick={() => openMenu()}>
-                                <img src={IconProfile} width={20} height={20} />
-                                <span className="header-right_unreadNotificationCounter">
-                                    <div className="notifications-counter_notificationsCounter header-right_unreadCounter notifications-counter_sm">
-                                        <span className="notifications-counter_notificationCounter">1</span>
-                                    </div>
-                                </span>
-                            </div>
+                            <>
+                                <div className="header-right_headerBalance">{userBalance ? userBalance + " $" : ""}</div>
+                                <div className="header-right_headerRightUser" onClick={() => openMenu()}>
+                                    <img src={IconProfile} width={20} height={20} />
+                                    <span className="header-right_unreadNotificationCounter">
+                                        <div className="notifications-counter_notificationsCounter header-right_unreadCounter notifications-counter_sm">
+                                            <span className="notifications-counter_notificationCounter">1</span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </>
                         ) : (
                             <div className="header-right_headerRight">
                                 <div className="header-right_headerBalance"></div>

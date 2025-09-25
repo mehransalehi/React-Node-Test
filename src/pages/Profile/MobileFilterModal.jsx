@@ -1,13 +1,25 @@
 import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import IconCalendar from "/src/assets/svg/calendar.svg";
 import IconChevronDown from "/src/assets/svg/chevron-down.svg";
 
 const MobileFilterModal = ({ isOpen, onClose, filters, onFilterChange, onDateChange, onSubmit }) => {
+    const [showFromCalendar, setShowFromCalendar] = useState(false);
+    const [showToCalendar, setShowToCalendar] = useState(false);
+
     if (!isOpen) return null;
 
-    const CustomDateInput = ({ value, onClick, placeholder }) => (
+    const formatDate = (date) => {
+        if (!date) return '';
+        return date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        }).replace(/\//g, '.');
+    };
+
+    const CustomDateInput = ({ date, onClick, placeholder }) => (
         <div className="input-date-mobile__custom-date-input" onClick={onClick}>
             <span className="input-date-mobile__custom-date-input-calendar">
                 <span className="SVGInline SVG-component__content">
@@ -15,7 +27,7 @@ const MobileFilterModal = ({ isOpen, onClose, filters, onFilterChange, onDateCha
                 </span>
             </span>
             <span className="input-date-mobile__custom-date-input-value">
-                {value || placeholder}
+                {date ? formatDate(date) : placeholder}
             </span>
             <span className="input-date-mobile__custom-date-input-arrow">
                 <span className="SVGInline SVG-component__content">
@@ -98,13 +110,23 @@ const MobileFilterModal = ({ isOpen, onClose, filters, onFilterChange, onDateCha
                                 <span className="slots-bets-filter-pay-history-mobile__item-label">Fecha de</span>
                                 <div className="slots-bets-filter-pay-history-mobile__item-input">
                                     <div className="input-date-mobile">
-                                        <DatePicker
-                                            selected={filters.dateFrom}
-                                            onChange={(date) => onDateChange(date, "dateFrom")}
-                                            dateFormat="dd.MM.yyyy"
-                                            customInput={<CustomDateInput placeholder="Seleccionar fecha" />}
-                                            maxDate={filters.dateTo}
+                                        <CustomDateInput
+                                            date={filters.dateFrom}
+                                            onClick={() => setShowFromCalendar(!showFromCalendar)}
+                                            placeholder="Seleccionar fecha"
                                         />
+                                        {showFromCalendar && (
+                                            <div className="calendar-popup-mobile">
+                                                <Calendar
+                                                    value={filters.dateFrom}
+                                                    onChange={(date) => {
+                                                        onDateChange(date, "dateFrom");
+                                                        setShowFromCalendar(false);
+                                                    }}
+                                                    maxDate={filters.dateTo}
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -112,13 +134,23 @@ const MobileFilterModal = ({ isOpen, onClose, filters, onFilterChange, onDateCha
                                 <span className="slots-bets-filter-pay-history-mobile__item-label">Fecha hasta</span>
                                 <div className="slots-bets-filter-pay-history-mobile__item-input">
                                     <div className="input-date-mobile">
-                                        <DatePicker
-                                            selected={filters.dateTo}
-                                            onChange={(date) => onDateChange(date, "dateTo")}
-                                            dateFormat="dd.MM.yyyy"
-                                            customInput={<CustomDateInput placeholder="Seleccionar fecha" />}
-                                            minDate={filters.dateFrom}
+                                        <CustomDateInput
+                                            date={filters.dateTo}
+                                            onClick={() => setShowToCalendar(!showToCalendar)}
+                                            placeholder="Seleccionar fecha"
                                         />
+                                        {showToCalendar && (
+                                            <div className="calendar-popup-mobile">
+                                                <Calendar
+                                                    value={filters.dateTo}
+                                                    onChange={(date) => {
+                                                        onDateChange(date, "dateTo");
+                                                        setShowToCalendar(false);
+                                                    }}
+                                                    minDate={filters.dateFrom}
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
