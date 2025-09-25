@@ -5,7 +5,7 @@ import ImgLogo from "/src/assets/img/logo.png";
 import IconProfile from "/src/assets/svg/profile.svg";
 import IconHamburger from "/src/assets/svg/hamburger.svg";
 
-const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, fragmentNavLinksTop, isSlotsOnly }) => {
+const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, handleChangePasswordClick, fragmentNavLinksTop, isSlotsOnly }) => {
     const [showUserMenu, setShowUserMenu] = useState(false);
     const openMenu = () => {
         setShowUserMenu(!showUserMenu);
@@ -121,7 +121,11 @@ const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, fra
                     </div>
                 </div>
             </header>
-            {showUserMenu && <UserMenu handleLogoutClick={handleLogoutClick} onClose={onClose} />}
+            {showUserMenu && <UserMenu 
+                handleChangePasswordClick={() => {handleChangePasswordClick(); onClose();}} 
+                handleLogoutClick={() => {handleLogoutClick(); onClose();}} 
+                onClose={onClose} 
+            />}
         </>
     );
 };

@@ -6,7 +6,7 @@ import IconNotification from "/src/assets/svg/notification.svg";
 import IconPassword from "/src/assets/svg/password.svg";
 import IconLogout from "/src/assets/svg/logout.svg";
 
-const UserMenu = ({ handleLogoutClick, onClose }) => {
+const UserMenu = ({ handleChangePasswordClick, handleLogoutClick, onClose }) => {
     const { contextData } = useContext(AppContext);
 
     return (
@@ -31,11 +31,11 @@ const UserMenu = ({ handleLogoutClick, onClose }) => {
                     <a className="mobile-menu-links_link" href="/profile/notification">
                         <img className="mobile-menu-links_icon" src={IconNotification} />
                         <span className="mobile-menu-links_linkText">Notifications</span>
-                        <div className="notifications-counter_notificationsCounter notifications-counter_md">
+                        {/* <div className="notifications-counter_notificationsCounter notifications-counter_md">
                             <span className="notifications-counter_notificationCounter">1</span>
-                        </div>
+                        </div> */}
                     </a>
-                    <button className="button_button button_ghost button_md mobile-menu-links_link">
+                    <button className="button_button button_ghost button_md mobile-menu-links_link" onClick={handleChangePasswordClick}>
                         <img className="mobile-menu-links_icon" src={IconPassword} />
                         <span className="mobile-menu-links_linkText">Change password</span>
                     </button>

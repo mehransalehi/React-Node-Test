@@ -9,6 +9,7 @@ import Footer from "./Footer";
 import NavLinkHeader from "../components/NavLinkHeader";
 import LoginModal from "./LoginModal";
 import LogoutConfirmModal from "./LogoutConfirmModal";
+import ChangePasswordModal from "./ChangePasswordModal";
 import { NavigationContext } from "./NavigationContext";
 
 const Layout = () => {
@@ -19,8 +20,8 @@ const Layout = () => {
     const [userBalance, setUserBalance] = useState("");
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
     const [fragmentNavLinksTop, setFragmentNavLinksTop] = useState(<></>);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isSlotsOnly, setIsSlotsOnly] = useState("");
     const navigate = useNavigate();
 
@@ -132,12 +133,12 @@ const Layout = () => {
         setShowLoginModal(false);
     };
 
-    const goLoginPage = () => {
-        navigate("/login");
-    }
-
     const handleLogoutClick = () => {
         setShowLogoutModal(true);
+    };
+
+    const handleChangePasswordClick = () => {
+        setShowChangePasswordModal(true);
     };
 
     const handleLogoutConfirm = () => {
@@ -153,12 +154,8 @@ const Layout = () => {
         }, null);
     };
 
-    const handleLogoutCancel = () => {
+    const handleChangePasswordConfirm = () => {
         setShowLogoutModal(false);
-    };
-
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
     };
 
     const layoutContextValue = {
@@ -166,6 +163,7 @@ const Layout = () => {
         userBalance,
         handleLoginClick,
         handleLogoutClick,
+        handleChangePasswordClick,
         refreshBalance
     };
 
@@ -175,14 +173,23 @@ const Layout = () => {
                 value={{ fragmentNavLinksTop, selectedPage, setSelectedPage, getPage }}
             >
                 <>
-                    {showLogoutModal && (
-                        <LogoutConfirmModal onConfirm={handleLogoutConfirm} onCancel={handleLogoutCancel} />
-                    )}
                     {showLoginModal && (
                         <LoginModal
                             isOpen={showLoginModal}
                             onClose={() => setShowLoginModal(false)}
                             onConfirm={handleLoginConfirm}
+                        />
+                    )}
+                    {showLogoutModal && (
+                        <LogoutConfirmModal 
+                            onConfirm={handleLogoutConfirm}
+                            onClose={() => setShowLogoutModal(false)}
+                        />
+                    )}
+                    {showChangePasswordModal && (
+                        <ChangePasswordModal 
+                            onConfirm={handleChangePasswordConfirm} 
+                            onClose={() => setShowChangePasswordModal(false)}
                         />
                     )}
                     <>
@@ -191,6 +198,7 @@ const Layout = () => {
                             userBalance={userBalance}
                             handleLoginClick={handleLoginClick}
                             handleLogoutClick={handleLogoutClick}
+                            handleChangePasswordClick={handleChangePasswordClick}
                             fragmentNavLinksTop={fragmentNavLinksTop}
                             isSlotsOnly={isSlotsOnly}
                         />
