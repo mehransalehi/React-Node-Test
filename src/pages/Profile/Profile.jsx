@@ -1,20 +1,10 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../AppContext";
-import { callApi } from "../../utils/Utils";
 
 const Profile = () => {
     const navigate = useNavigate();
     const { contextData } = useContext(AppContext);
-
-    const logout = () => {
-        callApi(contextData, "POST", "/logout", callbackLogout, null);
-    };
-
-    const callbackLogout = () => {
-        localStorage.removeItem("session");
-        window.location.href = "/";
-    };
 
     useEffect(() => {
         if (!contextData?.session) {

@@ -25,6 +25,7 @@ const ProfileHistory = () => {
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showHistory, setShowHistory] = useState(true);
+    const [activeTab, setActiveTab] = useState('operations');
     const [pagination, setPagination] = useState({
         start: 0,
         length: 5,
@@ -84,7 +85,7 @@ const ProfileHistory = () => {
         }));
     };
 
-    const fetchHistory = () => {
+    const fetchHistory = (tab) => {
         setLoading(true);
 
         const formatDateForAPI = (date) => {
@@ -93,18 +94,32 @@ const ProfileHistory = () => {
             return d.toISOString().split('T')[0];
         };
 
-        const queryParams = new URLSearchParams({
-            start: pagination.start,
-            length: pagination.length,
-            type: "slot",
-            ...(filters.dateFrom && { date_from: formatDateForAPI(filters.dateFrom) }),
-            ...(filters.dateTo && { date_to: formatDateForAPI(filters.dateTo) }),
-        }).toString();
+        let queryParams;
+        let apiEndpoint;
+
+        if (tab === 'casino') {
+            queryParams = new URLSearchParams({
+                start: pagination.start,
+                length: pagination.length,
+                ...(filters.dateFrom && { date_from: formatDateForAPI(filters.dateFrom) }),
+                ...(filters.dateTo && { date_to: formatDateForAPI(filters.dateTo) }),
+                type: "slot"
+            }).toString();
+            apiEndpoint = `/get-history?${queryParams}`;
+        } else {
+            queryParams = new URLSearchParams({
+                start: pagination.start,
+                length: pagination.length,
+                ...(filters.dateFrom && { date_from: formatDateForAPI(filters.dateFrom) }),
+                ...(filters.dateTo && { date_to: formatDateForAPI(filters.dateTo) }),
+            }).toString();
+            apiEndpoint = `/get-transactions?${queryParams}`;
+        }
 
         callApi(
             contextData,
             "GET",
-            `/get-history?${queryParams}`,
+            apiEndpoint,
             (response) => {
                 if (response.status === "0") {
                     setTransactions(response.data);
@@ -127,12 +142,24 @@ const ProfileHistory = () => {
             e.preventDefault();
         }
         setPagination((prev) => ({ ...prev, start: 0, currentPage: 1 }));
-        fetchHistory();
+        fetchHistory(activeTab);
     };
 
     useEffect(() => {
-        fetchHistory();
-    }, [pagination.start, pagination.length]);
+        if (!contextData?.session) {
+            navigate("/");
+        }
+    }, [contextData?.session, navigate]);
+
+    useEffect(() => {
+        fetchHistory(activeTab);
+    }, [pagination.start, pagination.length, activeTab]);
+
+    const handleTabChange = (tab) => {
+        fetchHistory(tab);
+        setActiveTab(tab);
+        setPagination((prev) => ({ ...prev, start: 0, currentPage: 1 }));
+    };
 
     const formatDateDisplay = (dateString) => {
         const date = new Date(dateString);
@@ -201,8 +228,18 @@ const ProfileHistory = () => {
                     <div className="history-content_tabsWrapper">
                         <div>
                             <div className="tabs_tabsHeader">
-                                <button className="tabs_tabsItem tabs_active">Operations</button>
-                                <button className="tabs_tabsItem tabs_inActive">Casino</button>
+                                <button
+                                    className={`tabs_tabsItem ${activeTab === 'operations' ? 'tabs_active' : 'tabs_inActive'}`}
+                                    onClick={() => handleTabChange('operations')}
+                                >
+                                    Operations
+                                </button>
+                                <button
+                                    className={`tabs_tabsItem ${activeTab === 'casino' ? 'tabs_active' : 'tabs_inActive'}`}
+                                    onClick={() => handleTabChange('casino')}
+                                >
+                                    Casino
+                                </button>
                             </div>
                         </div>
 
@@ -253,6 +290,57 @@ const ProfileHistory = () => {
                             {
                                 showHistory && <div onSubmit={handleSubmit}>
                                     <div className="history-operations-filters_filters">
+                                        {
+                                            activeTab === "casino" && <>
+                                                <ul className="select-multi-desktop">
+                                                    <li className="select-multi-desktop__item">
+                                                        <div className="select-multi-desktop__checkbox">
+                                                            <label className="check-box-desktop">
+                                                                <input
+                                                                    id="all-checkbox"
+                                                                    className="check-box-desktop__input"
+                                                                    type="checkbox"
+                                                                    name="all"
+                                                                    onChange={handleFilterChange}
+                                                                />
+                                                                <span className="check-box-desktop__checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <label className="select-multi-desktop__item-value" htmlFor="all-checkbox">All</label>
+                                                    </li>
+                                                    <li className="select-multi-desktop__item">
+                                                        <div className="select-multi-desktop__checkbox">
+                                                            <label className="check-box-desktop">
+                                                                <input
+                                                                    id="win-checkbox"
+                                                                    className="check-box-desktop__input"
+                                                                    type="checkbox"
+                                                                    name="win"
+                                                                    onChange={handleFilterChange}
+                                                                />
+                                                                <span className="check-box-desktop__checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <label className="select-multi-desktop__item-value" htmlFor="win-checkbox">Win</label>
+                                                    </li>
+                                                    <li className="select-multi-desktop__item">
+                                                        <div className="select-multi-desktop__checkbox">
+                                                            <label className="check-box-desktop">
+                                                                <input
+                                                                    id="lost-checkbox"
+                                                                    className="check-box-desktop__input"
+                                                                    type="checkbox"
+                                                                    name="lost"
+                                                                    onChange={handleFilterChange}
+                                                                />
+                                                                <span className="check-box-desktop__checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <label className="select-multi-desktop__item-value" htmlFor="lost-checkbox">Lost</label>
+                                                    </li>
+                                                </ul>
+                                            </>
+                                        }
                                         <div className="history-operations-filters_filterItem">
                                             <CustomFromInput />
                                             {showFromCalendar && (
@@ -294,30 +382,56 @@ const ProfileHistory = () => {
                         {loading ? (
                             <DivLoading />
                         ) : transactions.length > 0 ? (
-                            <div className="table_tableWrapper">
-                                <table className="table_table">
-                                    <thead>
-                                        <tr>
-                                            <td className="table_tableHeadCell" align="left">Date</td>
-                                            <td className="table_tableHeadCell" align="left">Type</td>
-                                            <td className="table_tableHeadCell" align="left">Balance before</td>
-                                            <td className="table_tableHeadCell" align="left">Balance after</td>
-                                            <td className="table_tableHeadCell" align="left">Amount</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {transactions.map((txn, index) => (
-                                            <tr className="table_tableRow" key={"txn" + index}>
-                                                <td className="table_tableCell" align="left">{formatDateDisplay(txn.created_at)}</td>
-                                                <td className="table_tableCell" align="left">{formatOperation(txn.operation)}</td>
-                                                <td className="table_tableCell" align="left">{formatBalance(txn.value_before)}</td>
-                                                <td className="table_tableCell" align="left">{formatBalance(txn.value_after)}</td>
-                                                <td className="table_tableCell" align="left">{formatBalance(txn.value)}</td>
+                            activeTab === "operations" ?
+                                <div className="table_tableWrapper">
+                                    <table className="table_table">
+                                        <thead>
+                                            <tr>
+                                                <td className="table_tableHeadCell" align="left">Date</td>
+                                                <td className="table_tableHeadCell" align="left">Type</td>
+                                                <td className="table_tableHeadCell" align="left">Balance before</td>
+                                                <td className="table_tableHeadCell" align="left">Balance after</td>
+                                                <td className="table_tableHeadCell" align="left">Amount</td>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                        <tbody>
+                                            {transactions.map((txn, index) => (
+                                                <tr className="table_tableRow" key={"txn" + index}>
+                                                    <td className="table_tableCell" align="left">{formatDateDisplay(txn.created_at)}</td>
+                                                    <td className="table_tableCell text-capitalize" align="left">{formatOperation(txn.type)}</td>
+                                                    <td className="table_tableCell" align="left">{formatBalance(txn.from_new_balance)}</td>
+                                                    <td className="table_tableCell" align="left">{formatBalance(txn.from_current_balance)}</td>
+                                                    <td className="table_tableCell" align="left">{formatBalance(txn.amount)}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div> : <div className="table_tableWrapper">
+                                    <table className="table_table">
+                                        <thead>
+                                            <tr>
+                                                <td className="table_tableHeadCell" align="left">Date</td>
+                                                <td className="table_tableHeadCell" align="left">Provider</td>
+                                                <td className="table_tableHeadCell" align="left">Balance before</td>
+                                                <td className="table_tableHeadCell" align="left">Balance after</td>
+                                                <td className="table_tableHeadCell" align="left">Bet</td>
+                                                <td className="table_tableHeadCell" align="left">Result</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {transactions.map((txn, index) => (
+                                                <tr className="table_tableRow" key={"txn" + index}>
+                                                    <td className="table_tableCell" align="left">{formatDateDisplay(txn.created_at)}</td>
+                                                    <td className="table_tableCell" align="left"></td>
+                                                    <td className="table_tableCell" align="left">{formatBalance(txn.value_before)}</td>
+                                                    <td className="table_tableCell" align="left">{formatBalance(txn.value_after)}</td>
+                                                    <td className="table_tableCell" align="left"></td>
+                                                    <td className="table_tableCell" align="left">{formatBalance(txn.value)}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                         ) : (
                             <div className="pay-history-mobile">
                                 The transaction history is empty

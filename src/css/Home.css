@@ -3783,3 +3783,58 @@
 .react-datepicker-wrapper {
     width: 100%;
 }
+
+.check-box-desktop__checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid hsla(0,0%,100%,.1);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.check-box-desktop__input:checked + .check-box-desktop__checkmark {
+    border: 1px solid hsla(0,0%,100%,.1);
+}
+
+.check-box-desktop__input:checked + .check-box-desktop__checkmark::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: 2px solid #f2ce00;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.check-box-desktop__input:hover + .check-box-desktop__checkmark {
+    border: 1px solid #f2ce00;
+}
+
+.select-multi-desktop {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.select-multi-desktop__item {
+    line-height: 1rem;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #fff;
+    display: flex;
+    padding: 7px 12px;
+    font-size: 14px;
+}
+
+.select-multi-desktop__checkbox {
+    height: 1.25rem;
+    width: 1.25rem;
+    margin-right: .688rem
+}
