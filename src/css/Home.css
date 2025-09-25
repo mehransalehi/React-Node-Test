@@ -3372,6 +3372,13 @@
     margin-top: 0 !important;
 }
 
+@media (max-width: 768px) {
+    .react-slideshow-container+ul.indicators {
+        top: 60px;
+        padding: 10px 14px;
+    }
+}
+
 .react-slideshow-container+ul.indicators .each-slideshow-indicator::before {
     background: var(--darkui-text-regular) !important;
     border-radius: 12px;
@@ -3388,6 +3395,17 @@
     background: var(--darkui-accent) !important;
 }
 
+@media (max-width: 768px) {
+    .react-slideshow-container {
+        aspect-ratio: 320 / 200;
+        height: inherit !important;
+    }
+
+    .react-slideshow-container img {
+        height: 100%;
+        object-fit: cover;
+    }
+}
 
 
 .tawk-min-container .tawk-button-circle.tawk-button-large {
@@ -3468,8 +3486,8 @@
 
 @media (max-width: 768px) {
     .chat-with-us {
-        bottom: 80px;
-        right: 5px;
+        bottom: 40px;
+        right: 25px;
     }
 }
 

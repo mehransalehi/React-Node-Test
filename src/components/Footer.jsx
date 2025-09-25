@@ -33,13 +33,13 @@ const Footer = () => {
                                     <a href="/">
                                         <span className="footer-link_footerLink footer-link_active">Home</span>
                                     </a>
-                                    <a href="/slots">
+                                    <a href="/casino">
                                         <span className="footer-link_footerLink">Casino</span>
                                     </a>
                                     <a href="/live-casino">
                                         <span className="footer-link_footerLink">Live Casino</span>
                                     </a>
-                                    <a href="/sport">
+                                    <a href="/sports">
                                         <span className="footer-link_footerLink">Sport</span>
                                     </a>
                                     <a href="/docs/betting-rules.pdf" target="_blank" rel="noopener noreferrer">

@@ -16,6 +16,10 @@ import "animate.css";
 import ImgBanner1 from "/src/assets/img/slots.avif";
 import ImgBanner2 from "/src/assets/img/live-casino.avif";
 import ImgBanner3 from "/src/assets/img/sport.avif";
+import ImgMobileBanner1 from "/src/assets/img/mobile-slots.avif";
+import ImgMobileBanner2 from "/src/assets/img/mobile-live-casino.avif";
+import ImgMobileBanner3 from "/src/assets/img/mobile-sport.avif";
+
 import ImgLobby from "/src/assets/img/lobby.avif";
 import ImgHot from "/src/assets/img/hot.avif";
 import ImgCrash from "/src/assets/img/crash.avif";
@@ -52,12 +56,12 @@ const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const imageSlideshow = [ImgBanner1, ImgBanner2, ImgBanner3];
+  let imageSlideshow = isMobile ? [ImgMobileBanner1, ImgMobileBanner2, ImgMobileBanner3] : [ImgBanner1, ImgBanner2, ImgBanner3];
 
   const promos = [
     { name: "casino", link: "/casino", image: ImgPromoCasino },
     { name: "live casino", link: "/live-casino", image: ImgPromoLiveCasino },
-    { name: "sport", link: "/sport", image: ImgPromoSport }
+    { name: "sport", link: "/sports", image: ImgPromoSport }
   ]
 
   useEffect(() => {

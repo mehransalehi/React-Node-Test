@@ -16,8 +16,7 @@ import LoginModal from "../components/LoginModal";
 import CustomAlert from "../components/CustomAlert";
 import "animate.css";
 import ImgBanner1 from "/src/assets/img/slots.avif";
-import ImgBanner2 from "/src/assets/img/live-casino.avif";
-import ImgBanner3 from "/src/assets/img/sport.avif";
+import ImgMobileBanner1 from "/src/assets/img/mobile-slots.avif";
 import ImgLobby from "/src/assets/img/lobby.avif";
 import ImgHot from "/src/assets/img/hot.avif";
 import ImgCrash from "/src/assets/img/crash.avif";
@@ -56,7 +55,7 @@ const Casino = () => {
   const location = useLocation();
   const searchRef = useRef(null);
 
-  const imageSlideshow = [ImgBanner1, ImgBanner2, ImgBanner3];
+  let imageSlideshow = isMobile ? [ImgMobileBanner1] : [ImgBanner1];
 
   useEffect(() => {
     const checkIsMobile = () => {

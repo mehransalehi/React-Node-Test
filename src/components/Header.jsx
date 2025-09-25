@@ -100,11 +100,11 @@ const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, han
                                 <div className="header-right_headerBalance">{userBalance ? userBalance + " $" : ""}</div>
                                 <div className="header-right_headerRightUser" onClick={() => openMenu()}>
                                     <img src={IconProfile} width={20} height={20} />
-                                    <span className="header-right_unreadNotificationCounter">
+                                    {/* <span className="header-right_unreadNotificationCounter">
                                         <div className="notifications-counter_notificationsCounter header-right_unreadCounter notifications-counter_sm">
                                             <span className="notifications-counter_notificationCounter">1</span>
                                         </div>
-                                    </span>
+                                    </span> */}
                                 </div>
                             </>
                         ) : (
@@ -112,7 +112,7 @@ const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, han
                                 <div className="header-right_headerBalance"></div>
                                 <div className="header-right_guestRightMenu">
                                     <button className="button_button button_zeusPrimary button_xs" onClick={() => handleLoginClick()}>Login</button>
-                                    <button className="button_button button_ghost button_md header-right_burgerButton hidden md:flex">
+                                    <button className="button_button button_ghost button_md header-right_burgerButton hidden md:flex" onClick={() => openMenu()}>
                                         <img src={IconHamburger} />
                                     </button>
                                 </div>

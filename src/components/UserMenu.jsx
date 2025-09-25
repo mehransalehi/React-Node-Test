@@ -12,38 +12,43 @@ const UserMenu = ({ handleChangePasswordClick, handleLogoutClick, onClose }) => 
     return (
         <div id="mobile-menu-wrapper" className="mobile-menu-wrapper_mobileMenuWrapper mobile-menu-wrapper_opened" onClick={onClose}>
             <div className="mobile-menu_mobileMenu" onClick={(e) => e.stopPropagation()}>
-                <div className="mobile-menu-user_wrapper">
-                    <div className="mobile-menu-user_userIcon">{contextData.session.user.username?.charAt(0).toUpperCase()}</div>
-                    <div>
-                        <p className="mobile-menu-user_name">{contextData.session.user.username}</p>
-                        <p className="mobile-menu-user_balance">credits {contextData.session.user.balance || ''} $</p>
-                    </div>
-                </div>
-                <div className="mobile-menu-links_linksList">
-                    <a className="mobile-menu-links_link" href="/profile">
-                        <img className="mobile-menu-links_icon" src={IconProfileCircle} />
-                        <span className="mobile-menu-links_linkText">My data</span>
-                    </a>
-                    <a className="mobile-menu-links_link" href="/profile/history">
-                        <img className="mobile-menu-links_icon" src={IconHistory} />
-                        <span className="mobile-menu-links_linkText">History</span>
-                    </a>
-                    <a className="mobile-menu-links_link" href="/profile/notification">
-                        <img className="mobile-menu-links_icon" src={IconNotification} />
-                        <span className="mobile-menu-links_linkText">Notifications</span>
-                        {/* <div className="notifications-counter_notificationsCounter notifications-counter_md">
-                            <span className="notifications-counter_notificationCounter">1</span>
-                        </div> */}
-                    </a>
-                    <button className="button_button button_ghost button_md mobile-menu-links_link" onClick={handleChangePasswordClick}>
-                        <img className="mobile-menu-links_icon" src={IconPassword} />
-                        <span className="mobile-menu-links_linkText">Change password</span>
-                    </button>
-                    <button className="button_button button_ghost button_md mobile-menu-links_link" onClick={handleLogoutClick}>
-                        <img className="mobile-menu-links_icon" src={IconLogout} />
-                        <span className="mobile-menu-links_linkText">Log out</span>
-                    </button>
-                </div>
+                {
+                    contextData.session && <>
+                        <div className="mobile-menu-user_wrapper">
+                            <div className="mobile-menu-user_userIcon">{contextData.session.user.username?.charAt(0).toUpperCase()}</div>
+                            <div>
+                                <p className="mobile-menu-user_name">{contextData.session.user.username}</p>
+                                <p className="mobile-menu-user_balance">credits {contextData.session.user.balance || ''} $</p>
+                            </div>
+                        </div>
+                        <div className="mobile-menu-links_linksList">
+                            <a className="mobile-menu-links_link" href="/profile">
+                                <img className="mobile-menu-links_icon" src={IconProfileCircle} />
+                                <span className="mobile-menu-links_linkText">My data</span>
+                            </a>
+                            <a className="mobile-menu-links_link" href="/profile/history">
+                                <img className="mobile-menu-links_icon" src={IconHistory} />
+                                <span className="mobile-menu-links_linkText">History</span>
+                            </a>
+                            <a className="mobile-menu-links_link" href="/profile/notification">
+                                <img className="mobile-menu-links_icon" src={IconNotification} />
+                                <span className="mobile-menu-links_linkText">Notifications</span>
+                                {/* <div className="notifications-counter_notificationsCounter notifications-counter_md">
+                                    <span className="notifications-counter_notificationCounter">1</span>
+                                </div> */}
+                            </a>
+                            <button className="button_button button_ghost button_md mobile-menu-links_link" onClick={handleChangePasswordClick}>
+                                <img className="mobile-menu-links_icon" src={IconPassword} />
+                                <span className="mobile-menu-links_linkText">Change password</span>
+                            </button>
+                            <button className="button_button button_ghost button_md mobile-menu-links_link" onClick={handleLogoutClick}>
+                                <img className="mobile-menu-links_icon" src={IconLogout} />
+                                <span className="mobile-menu-links_linkText">Log out</span>
+                            </button>
+                        </div>
+                    </>
+                }
+                
                 <div className="mobile-menu-navigation_mobileMenuNav">
                     <a className="mobile-menu-navigation_mobileMenuLink" href="/">Home</a>
                     <a className="mobile-menu-navigation_mobileMenuLink" href="/casino">Casino</a>
