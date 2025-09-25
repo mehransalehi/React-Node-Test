@@ -28,7 +28,7 @@ const UserMenu = ({ handleLogoutClick, onClose }) => {
                         <img className="mobile-menu-links_icon" src={IconHistory} />
                         <span className="mobile-menu-links_linkText">History</span>
                     </a>
-                    <a className="mobile-menu-links_link" href="/profile/notifications">
+                    <a className="mobile-menu-links_link" href="/profile/notification">
                         <img className="mobile-menu-links_icon" src={IconNotification} />
                         <span className="mobile-menu-links_linkText">Notifications</span>
                         <div className="notifications-counter_notificationsCounter notifications-counter_md">

@@ -3838,3 +3838,118 @@
     width: 1.25rem;
     margin-right: .688rem
 }
+
+
+
+.notification-new-button_notificationNewButton {
+    width: 35px;
+    height: 22px;
+    border-radius: 5px;
+    border: 1px solid hsla(0,0%,100%,.4);
+    font-size: 11px
+}
+
+.notification-item_notificationItem {
+    background-color: #191946;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid hsla(0,0%,100%,.1);
+    max-width: 485px
+}
+
+.notification-item_notificationHeader {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.notification-item_notificationTitle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--darkui-accent);
+    font-size: 12px;
+    font-weight: 800
+}
+
+.notification-item_notificationTitleText {
+    font-weight: 800;
+    font-size: 14px
+}
+
+.notification-item_datetime {
+    color: #83899f;
+    font-size: 12px;
+    font-weight: 500
+}
+
+.notification-item_notificationBody {
+    font-size: 12px;
+    line-height: 1.5em;
+    margin-bottom: 4px;
+    font-weight: 400;
+    color: #fff;
+    font-size: 14px
+}
+
+.notification-item_notificationBodyCollapsed {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: pre-wrap;
+    word-wrap: break-word
+}
+
+.notification-item_collapsedControlRow {
+    margin-bottom: 4px
+}
+
+.notification-item_collapseToggleBtn {
+    color: #979797;
+    text-transform: lowercase;
+    font-size: 12px;
+    padding: 0!important;
+    height: auto!important;
+    background: none!important;
+    font-weight: 400!important
+}
+
+.notification-item_collapseToggleBtn:hover {
+    color: #fff
+}
+
+.notification-item_collapseToggleBtn:hover:before {
+    content: none
+}
+
+.notification-item_collapsedBtnText {
+    color: #7080a8;
+    font-weight: 500
+}
+
+.notification-item_notificationFooter {
+    display: flex;
+    justify-content: flex-end
+}
+
+.notification-item_markAsRead {
+    color: var(--darkui-accent);
+    text-transform: lowercase;
+    font-size: 12px;
+    padding: 0!important;
+    height: auto!important;
+    border-radius: 0;
+    background: none!important;
+    font-weight: 500!important
+}
+
+.notification-item_markAsRead:hover {
+    opacity: .8
+}
+
+.notification-item_markAsRead:hover:before {
+    content: none
+}

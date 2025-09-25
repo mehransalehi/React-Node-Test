@@ -6,6 +6,7 @@ import Sports from "./pages/Sports";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile/Profile";
 import ProfileHistory from "./pages/Profile/ProfileHistory";
+import ProfileNotification from "./pages/Profile/ProfileNotification";
 import MobileProfileChangePassword from "./pages/Profile/ChangePassword";
 import Layout from "./components/Layout";
 
@@ -21,6 +22,7 @@ export default function AppRoutes() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/history" element={<ProfileHistory />} />
+                <Route path="/profile/notification" element={<ProfileNotification />} />
                 <Route path="/profile/change-password" element={<MobileProfileChangePassword />} />
             </Route>
         </Routes>
