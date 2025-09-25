@@ -12,7 +12,6 @@ import NavLinkHeader from "../components/NavLinkHeader";
 import LoginModal from "./LoginModal";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 import { NavigationContext } from "./NavigationContext";
-import VerifyAgeModal from "../components/VerifyAgeModal";
 
 const Layout = () => {
     const { contextData } = useContext(AppContext);
@@ -24,7 +23,6 @@ const Layout = () => {
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [fragmentNavLinksTop, setFragmentNavLinksTop] = useState(<></>);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [showAgeModal, setShowAgeModal] = useState(false);
     const [isSlotsOnly, setIsSlotsOnly] = useState("");
     const navigate = useNavigate();
 
@@ -38,13 +36,6 @@ const Layout = () => {
             getStatus();
         }
     }, [contextData.session]);
-
-    useEffect(() => {
-        const isAgeVerified = localStorage.getItem("is-age-verified");
-        if (!isAgeVerified) {
-            setShowAgeModal(true);
-        }
-    });
 
     useEffect(() => {
         const checkIsMobile = () => {
@@ -84,7 +75,7 @@ const Layout = () => {
     };
 
     const callbackGetPage = () => {
-        
+
     };
 
     const callbackGetStatus = (result) => {
@@ -180,21 +171,11 @@ const Layout = () => {
         refreshBalance
     };
 
-    const handleAgeVerifyConfirm = () => {
-        localStorage.setItem("is-age-verified", JSON.stringify({ value: true }));
-        setShowAgeModal(false);
-    };
-
     return (
         <LayoutContext.Provider value={layoutContextValue}>
             <NavigationContext.Provider
                 value={{ fragmentNavLinksTop, selectedPage, setSelectedPage, getPage }}
             >
-                <VerifyAgeModal
-                    isOpen={showAgeModal}
-                    onClose={() => setShowAgeModal(false)}
-                    onConfirm={handleAgeVerifyConfirm}
-                />
                 <div className="body-container fade-in">
                     {showLogoutModal && (
                         <LogoutConfirmModal onConfirm={handleLogoutConfirm} onCancel={handleLogoutCancel} />
@@ -206,7 +187,7 @@ const Layout = () => {
                             onConfirm={handleLoginConfirm}
                         />
                     )}
-                    <div className="app__header-wrapper">
+                    <div className="app">
                         <Header
                             isLogin={isLogin}
                             userBalance={userBalance}
@@ -228,7 +209,7 @@ const Layout = () => {
                         </main>
                         {
                             isMobile && !isSportsPage ? <Footer isSportsPage={isSportsPage} /> :
-                            !isMobile ? <Footer isSportsPage={isSportsPage} /> : <></>
+                                !isMobile ? <Footer isSportsPage={isSportsPage} /> : <></>
                         }
                         {
                             !isSportsPage && <MobileFooter isSlotsOnly={isSlotsOnly} />
