@@ -10,7 +10,7 @@ import './css/Calendar.css'
 
 // import './css/D.css'
 // import './css/M.css'
-import './css/Ganamos.css'
+// import './css/Ganamos.css'
 // import './css/LiveCasino.css'
 // import './css/Slot.css'
 import App from './App.jsx'

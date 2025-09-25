@@ -1,30 +1,4 @@
-// import LazyLoad from "react-lazyload";
-import { useRef } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import IconPlay from "/src/assets/svg/play.svg";
-import IconFavorite from "/src/assets/svg/favorite.svg";
-
 const GameCard = (props) => {
-  const imgRef = useRef(null);
-
-  const imageLoaded = () => {
-    // console.log(imgRef.current);
-    // imgRef.current?.classList.remove("d-none");
-    document
-      .getElementById("game-card-img-" + props.id)
-      .classList.add("fade-in");
-
-    document
-      .getElementById("game-card-img-" + props.id)
-      .classList.remove("visibility-hidden");
-  };
-
-  const imageError = () => {
-    document
-      .getElementById("game-card-img-" + props.id)
-      .setAttribute("src", "/src/assets/img/no-image.jpg");
-  };
-
   return (
     <a className="game-card_gameCard game-card_sm games-cards-suspensed_gameCardClassName" onClick={props.onClick}>
       <span className="game-card_gameCardInner">

@@ -6,8 +6,6 @@ import { LayoutContext } from "./LayoutContext";
 import { callApi } from "../utils/Utils";
 import Header from "./Header";
 import Footer from "./Footer";
-import MobileHeader from "./MobileHeader";
-import MobileFooter from "./MobileFooter";
 import NavLinkHeader from "../components/NavLinkHeader";
 import LoginModal from "./LoginModal";
 import LogoutConfirmModal from "./LogoutConfirmModal";
@@ -196,23 +194,12 @@ const Layout = () => {
                             fragmentNavLinksTop={fragmentNavLinksTop}
                             isSlotsOnly={isSlotsOnly}
                         />
-                        <MobileHeader
-                            isLogin={isLogin}
-                            userBalance={userBalance}
-                            isOpen={isSidebarOpen}
-                            handleLoginClick={goLoginPage}
-                            onToggle={toggleSidebar}
-                            isSlotsOnly={isSlotsOnly}
-                        />
                         <main className="app__main">
                             <Outlet />
                         </main>
                         {
                             isMobile && !isSportsPage ? <Footer isSportsPage={isSportsPage} /> :
                                 !isMobile ? <Footer isSportsPage={isSportsPage} /> : <></>
-                        }
-                        {
-                            !isSportsPage && <MobileFooter isSlotsOnly={isSlotsOnly} />
                         }
                     </>
                 </>

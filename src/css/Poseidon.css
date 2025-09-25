@@ -31,10 +31,6 @@
     --game-card-highlighted-border: rgb(233, 8, 0);
 }
 
-:root {
-    color-scheme: dark
-}
-
 body {
     margin: 0;
     min-height: 100vh;
