@@ -176,7 +176,7 @@ const Layout = () => {
             <NavigationContext.Provider
                 value={{ fragmentNavLinksTop, selectedPage, setSelectedPage, getPage }}
             >
-                <div className="body-container fade-in">
+                <>
                     {showLogoutModal && (
                         <LogoutConfirmModal onConfirm={handleLogoutConfirm} onCancel={handleLogoutCancel} />
                     )}
@@ -187,7 +187,7 @@ const Layout = () => {
                             onConfirm={handleLoginConfirm}
                         />
                     )}
-                    <div className="app">
+                    <>
                         <Header
                             isLogin={isLogin}
                             userBalance={userBalance}
@@ -214,8 +214,8 @@ const Layout = () => {
                         {
                             !isSportsPage && <MobileFooter isSlotsOnly={isSlotsOnly} />
                         }
-                    </div>
-                </div>
+                    </>
+                </>
             </NavigationContext.Provider>
         </LayoutContext.Provider>
     );

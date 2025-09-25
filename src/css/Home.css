@@ -3666,3 +3666,93 @@
         line-height: 10rem;
     }
 }
+
+.me-content_meContent {
+    padding: 10px 15px
+}
+
+.me-content_title {
+    color: var(--darkui-accent);
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 700
+}
+
+.me-content_subTitle {
+    color: var(--darkui-text-regular);
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 700
+}
+
+.me-content_meContentInner {
+    width: 100%;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: var(--darkui-fields)
+}
+
+.me-content_meContentPrice {
+    font-weight: 800;
+    font-size: 24px
+}
+
+@media(max-width: 576px) {
+    .me-content_meContentPrice {
+        font-size:18px
+    }
+}
+
+.me-content_meContentPriceCurrency {
+    color: #7080a8;
+    font-size: 18px;
+    font-weight: 700
+}
+
+@media(max-width: 992px) {
+    .me-content_meContentPriceCurrency {
+        font-size:14px
+    }
+}
+
+.me-content_meContentCopyButton {
+    display: flex;
+    color: #7080a8;
+    transition: color .2s linear
+}
+
+@media(min-width: 992px) {
+    .me-content_meContentCopyButton:hover {
+        color:#fff
+    }
+}
+
+@media(max-width: 992px) {
+    .me-content_meContentCopyButton:active {
+        color:#fff
+    }
+}
+
+.me-content_contentTextCard {
+    padding: 6px 10px
+}
+
+.me-content_contentTextCardTitle {
+    color: var(--darkui-accent);
+    font-size: 9px;
+    font-weight: 700
+}
+
+.me-content_contentTextCardText {
+    color: var(--darkui-text-regular);
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 6px
+}
+
+.me-content_separator {
+    width: 100%;
+    height: 1px;
+    background-color: var(--darkui-card);
+    margin-bottom: 10px
+}

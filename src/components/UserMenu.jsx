@@ -20,7 +20,7 @@ const UserMenu = ({ handleLogoutClick, onClose }) => {
                     </div>
                 </div>
                 <div className="mobile-menu-links_linksList">
-                    <a className="mobile-menu-links_link">
+                    <a className="mobile-menu-links_link" href="/profile">
                         <img className="mobile-menu-links_icon" src={IconProfileCircle} />
                         <span className="mobile-menu-links_linkText">My data</span>
                     </a>

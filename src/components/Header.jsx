@@ -95,7 +95,7 @@ const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, fra
                         }
                     </div>
                     <div className="header-right_headerRight">
-                        <div className="header-right_headerBalance">{userBalance}</div>
+                        <div className="header-right_headerBalance">{userBalance} $</div>
                         {isLogin ? (
                             <div className="header-right_headerRightUser" onClick={() => openMenu()}>
                                 <img src={IconProfile} width={20} height={20} />
