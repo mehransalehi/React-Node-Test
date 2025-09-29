@@ -39,6 +39,7 @@ const Casino = () => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const [games, setGames] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [mainCategories, setMainCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState({});
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [isProviderDropdownOpen, setIsProviderDropdownOpen] = useState(false);
@@ -179,7 +180,11 @@ const Casino = () => {
     } else {
       setCategories(result.data.categories);
       setSelectedProvider(null);
-      setPageData(result.data);      
+      setPageData(result.data);
+
+      if (result.data.menu === "home") {
+        setMainCategories(result.data.categories);
+      }
 
       if (pageData.url && pageData.url != null) {
         if (contextData.isMobile) {
@@ -211,6 +216,23 @@ const Casino = () => {
       setPageData(result.data);
       setSelectedProvider(null);
       setActiveCategory({});
+
+      if (result.data.page_group_type === "categories") {
+        setCategories(result.data.categories)
+      }
+
+      if (result.data.page_group_type === "games") {
+        if (mainCategories && mainCategories.length > 0) {
+          setCategories(mainCategories);
+        } else {
+          callApi(contextData, "GET", "/get-page?page=home", (homeResult) => {
+            if (homeResult.data && homeResult.data.categories) {
+              setMainCategories(homeResult.data.categories);
+              setCategories(homeResult.data.categories);
+            }
+          }, null);
+        }
+      }
 
       if (result.data.categories && result.data.categories.length > 0) {
         let item = result.data.categories[0];
@@ -263,7 +285,11 @@ const Casino = () => {
     setSelectedCategoryIndex(categoryIndex);
     setTxtSearch("");
 
-    const groupCode = pageGroupCode || pageData.page_group_code;
+    const groupCode = pageGroupCode || pageData.page_group_type === "categories" ? pageData.page_group_code : "default_pages_home";
+    console.log(pageData);
+    
+    console.log(groupCode);
+    
 
     let apiUrl = "/games/?page_group_type=categories&page_group_code=" +
       groupCode +
