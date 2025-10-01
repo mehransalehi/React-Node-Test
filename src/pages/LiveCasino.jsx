@@ -25,7 +25,7 @@ let pageCurrent = 0;
 
 
 const LiveCasino = () => {
-  const pageTitle = "Mejor Casino en Vivo";
+  const pageTitle = "Casino en Vivo";
   const { contextData } = useContext(AppContext);
   const { isLogin } = useContext(LayoutContext);
   const { setShowFullDivLoading } = useContext(NavigationContext);

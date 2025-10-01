@@ -98,7 +98,7 @@ const Layout = () => {
                         icon=""
                     />
                     <NavLinkHeader
-                        title="Mejor Casino en Vivo"
+                        title="Casino en Vivo"
                         pageCode="live-casino"
                         icon=""
                     />
