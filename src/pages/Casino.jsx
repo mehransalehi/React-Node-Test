@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { LayoutContext } from "../components/LayoutContext";
 import { NavigationContext } from "../components/NavigationContext";
@@ -58,6 +58,7 @@ const Casino = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchRef = useRef(null);
+  const { isSlotsOnly } = useOutletContext();
 
   let imageSlideshow = isMobile ? [ImgMobileBanner1] : [ImgBanner1];
 
@@ -95,10 +96,10 @@ const Casino = () => {
 
   useEffect(() => {
     updateNavLinks();
-  }, [selectedPage]);
+  }, [selectedPage, isSlotsOnly]);
 
   const updateNavLinks = () => {
-    if ((contextData.slots_only == null) || (contextData.slots_only == false)) {
+    if (isSlotsOnly === "false") {
       setFragmentNavLinksBody(
         <>
           <NavLinkIcon
@@ -123,7 +124,7 @@ const Casino = () => {
             onClick={() => getSubPage("hot")}
           />
           <NavLinkIcon
-            title="Habilidad"
+            title="Juegos de crash"
             pageCode="arcade"
             icon={ImgCrash}
             active={selectedPage === "arcade"}
@@ -137,7 +138,7 @@ const Casino = () => {
             onClick={() => getSubPage("megaways")}
           />
           <NavLinkIcon
-            title="Ruleta"
+            title="Ruletas"
             pageCode="roulette"
             icon={ImgRoulette}
             active={selectedPage === "roulette"}
@@ -516,7 +517,7 @@ const Casino = () => {
           <div className="active-games">
             <div className="games-block-title_gamesBlockTitle">
               <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleLeft"></div>
-              <p className="games-block-title_gamesBlockTitleText">Top Games</p>
+              <p className="games-block-title_gamesBlockTitleText">Tragamonedas Destacadas</p>
               <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleRight"></div>
             </div>
 
@@ -552,14 +553,14 @@ const Casino = () => {
           {!isLoadingGames && games.length >= 20 && (
             <div className="games-cards-suspensed_seeMoreWrapper">
               <a onClick={loadMoreContent}>
-                <button className="button_button button_zeusPrimary button_md">See more</button>
+                <button className="button_button button_zeusPrimary button_md">Ver más</button>
               </a>
             </div>
           )}
           {!isLoadingGames && games.length === 0 && (
             <div className="not-found-view_notFoundView">
               <div className="not-found-view_notFoundViewContent">
-                We looked everywhere, <br /> but found nothing.
+                Buscamos por todas partes, <br /> pero no encontramos nada.
               </div>
             </div>
           )}
