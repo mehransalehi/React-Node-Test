@@ -1,9 +1,9 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { LayoutContext } from "../components/LayoutContext";
 import { NavigationContext } from "../components/NavigationContext";
-import { callApi, callApiService } from "../utils/Utils";
+import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import Slideshow from "../components/Slideshow";
 import CategorySlideshow from "../components/CategorySlideshow";
@@ -21,6 +21,7 @@ import ImgMobileBanner2 from "/src/assets/img/mobile-live-casino.avif";
 let selectedGameId = null;
 let selectedGameType = null;
 let selectedGameLauncher = null;
+let selectedGameName = null;
 let pageCurrent = 0;
 
 
@@ -45,7 +46,6 @@ const LiveCasino = () => {
   const [messageCustomAlert, setMessageCustomAlert] = useState(["", ""]);
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
   const refGameModal = useRef();
-  const navigate = useNavigate();
   const location = useLocation();
   const searchRef = useRef(null);
 
@@ -73,6 +73,7 @@ const LiveCasino = () => {
     selectedGameId = null;
     selectedGameType = null;
     selectedGameLauncher = null;
+    selectedGameName = null;
     setGameUrl("");
     setShouldShowGameModal(false);
 
@@ -156,7 +157,7 @@ const LiveCasino = () => {
     setSelectedCategoryIndex(categoryIndex);
     setTxtSearch("");
 
-    let apiUrl = "/games/?page_group_type=categories&page_group_code=" +
+    let apiUrl = "/get-content?page_group_type=categories&page_group_code=" +
       pageData.page_group_code +
       "&table_name=" +
       tableName +
@@ -171,7 +172,7 @@ const LiveCasino = () => {
       apiUrl += "&provider=" + selectedProvider.id;
     }
 
-    callApiService(
+    callApi(
       contextData,
       "GET",
       apiUrl,
@@ -186,10 +187,10 @@ const LiveCasino = () => {
     } else {
       if (pageCurrent == 0) {
         configureImageSrc(result);
-        setGames(result.data);
+        setGames(result.content);
       } else {
         configureImageSrc(result);
-        setGames([...games, ...result.data]);
+        setGames([...games, ...result.content]);
       }
       pageCurrent += 1;
     }
@@ -197,7 +198,7 @@ const LiveCasino = () => {
   };
 
   const configureImageSrc = (result) => {
-    (result.data || []).forEach((element) => {
+    (result.content || []).forEach((element) => {
       let imageDataSrc = element.image_url;
       if (element.image_local != null) {
         imageDataSrc = contextData.cdnUrl + element.image_local;
@@ -206,12 +207,13 @@ const LiveCasino = () => {
     });
   };
 
-  const launchGame = (id, type, launcher) => {
+  const launchGame = (game, type, launcher) => {
     setShouldShowGameModal(true);
     setShowFullDivLoading(true);
-    selectedGameId = id != null ? id : selectedGameId;
+    selectedGameId = game.id != null ? game.id : selectedGameId;
     selectedGameType = type != null ? type : selectedGameType;
     selectedGameLauncher = launcher != null ? launcher : selectedGameLauncher;
+    selectedGameName = game?.name;
     callApi(contextData, "GET", "/get-game-url?game_id=" + selectedGameId, callbackLaunchGame, null);
   };
 
@@ -233,6 +235,7 @@ const LiveCasino = () => {
     selectedGameId = null;
     selectedGameType = null;
     selectedGameLauncher = null;
+    selectedGameName = null;
     setGameUrl("");
     setShouldShowGameModal(false);
   };
@@ -342,6 +345,7 @@ const LiveCasino = () => {
       {shouldShowGameModal && selectedGameId !== null ? (
         <GameModal
           gameUrl={gameUrl}
+          gameName={selectedGameName}
           reload={launchGame}
           launchInNewTab={() => launchGame(null, null, "tab")}
           ref={refGameModal}
@@ -388,11 +392,13 @@ const LiveCasino = () => {
           </div>
 
           <div className="active-games">
-            <div className="games-block-title_gamesBlockTitle">
-              <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleLeft"></div>
-              <p className="games-block-title_gamesBlockTitleText">{activeCategory.name}</p>
-              <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleRight"></div>
-            </div>
+            {
+              txtSearch === "" && <div className="games-block-title_gamesBlockTitle">
+                <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleLeft"></div>
+                <p className="games-block-title_gamesBlockTitleText">{activeCategory.name}</p>
+                <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleRight"></div>
+              </div>
+            }
 
             <div className="games-cards-suspensed_gameCardWrapper">
               <div className="grid_grid grid_sm grid_rowMax3 games-cards-suspensed_gameCardListClassName">
@@ -410,7 +416,7 @@ const LiveCasino = () => {
                         imageSrc={imageDataSrc}
                         onClick={() =>
                           isLogin
-                            ? launchGame(item.id, "slot", "tab")
+                            ? launchGame(item, "slot", "tab")
                             : handleLoginClick()
                         }
                       />

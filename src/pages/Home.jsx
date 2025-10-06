@@ -3,7 +3,7 @@ import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { LayoutContext } from "../components/LayoutContext";
 import { NavigationContext } from "../components/NavigationContext";
-import { callApi, callApiService } from "../utils/Utils";
+import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import NavLinkIcon from "../components/NavLinkIcon";
 import Slideshow from "../components/Slideshow";
@@ -36,6 +36,7 @@ import ImgPromoSport from "/src/assets/img/sport-promo.avif";
 let selectedGameId = null;
 let selectedGameType = null;
 let selectedGameLauncher = null;
+let selectedGameName = null;
 let pageCurrent = 0;
 
 const Home = () => {
@@ -98,6 +99,7 @@ const Home = () => {
     selectedGameId = null;
     selectedGameType = null;
     selectedGameLauncher = null;
+    selectedGameName = null;
     setGameUrl("");
     setShouldShowGameModal(false);
 
@@ -110,7 +112,7 @@ const Home = () => {
 
   useEffect(() => {
     updateNavLinks();
-  }, [selectedPage, isSlotsOnly]);
+  }, [isSlotsOnly]);
 
   const getStatus = () => {
     callApi(contextData, "GET", "/get-status", callbackGetStatus, null);
@@ -208,7 +210,6 @@ const Home = () => {
       setTopGames(result.top_slot);
       setTopLiveCasino(result.top_livecasino);
       contextData.slots_only = result && result.slots_only;
-      updateNavLinks();
     }
   };
 
@@ -307,10 +308,10 @@ const Home = () => {
 
     const groupCode = pageGroupCode || pageData.page_group_code;
 
-    callApiService(
+    callApi(
       contextData,
       "GET",
-      "/games/?page_group_type=categories&page_group_code=" +
+      "/get-content?page_group_type=categories&page_group_code=" +
       groupCode +
       "&table_name=" +
       tableName +
@@ -331,10 +332,10 @@ const Home = () => {
     } else {
       if (pageCurrent === 0) {
         configureImageSrc(result);
-        setGames(result.data);
+        setGames(result.content);
       } else {
         configureImageSrc(result);
-        setGames([...games, ...result.data]);
+        setGames([...games, ...result.content]);
       }
       pageCurrent += 1;
     }
@@ -342,7 +343,7 @@ const Home = () => {
   };
 
   const configureImageSrc = (result) => {
-    (result.data || []).forEach((element) => {
+    (result.content || []).forEach((element) => {
       let imageDataSrc = element.image_url;
       if (element.image_local !== null) {
         imageDataSrc = contextData.cdnUrl + element.image_local;
@@ -351,12 +352,13 @@ const Home = () => {
     });
   };
 
-  const launchGame = (id, type, launcher) => {
+  const launchGame = (game, type, launcher) => {
     setShouldShowGameModal(true);
     setShowFullDivLoading(true);
-    selectedGameId = id !== null ? id : selectedGameId;
+    selectedGameId = game.id !== null ? game.id : selectedGameId;
     selectedGameType = type !== null ? type : selectedGameType;
     selectedGameLauncher = launcher !== null ? launcher : selectedGameLauncher;
+    selectedGameName = game?.name;
     callApi(contextData, "GET", "/get-game-url?game_id=" + selectedGameId, callbackLaunchGame, null);
   };
 
@@ -378,6 +380,7 @@ const Home = () => {
     selectedGameId = null;
     selectedGameType = null;
     selectedGameLauncher = null;
+    selectedGameName = null;
     setGameUrl("");
     setShouldShowGameModal(false);
   };
@@ -481,6 +484,7 @@ const Home = () => {
       {shouldShowGameModal && selectedGameId !== null ? (
         <GameModal
           gameUrl={gameUrl}
+          gameName={selectedGameName}
           reload={launchGame}
           launchInNewTab={() => launchGame(null, null, "tab")}
           ref={refGameModal}
@@ -555,7 +559,7 @@ const Home = () => {
                         imageSrc={imageDataSrc}
                         onClick={() =>
                           isLogin
-                            ? launchGame(item.id, "slot", "tab")
+                            ? launchGame(item, "slot", "tab")
                             : handleLoginClick()
                         }
                       />
@@ -576,7 +580,7 @@ const Home = () => {
                         imageSrc={imageDataSrc}
                         onClick={() =>
                           isLogin
-                            ? launchGame(item.id, "slot", "tab")
+                            ? launchGame(item, "slot", "tab")
                             : handleLoginClick()
                         }
                       />
@@ -617,7 +621,7 @@ const Home = () => {
                               imageSrc={imageDataSrc}
                               onClick={() =>
                                 isLogin
-                                  ? launchGame(item.id, "slot", "tab")
+                                  ? launchGame(item, "slot", "tab")
                                   : handleLoginClick()
                               }
                             />
