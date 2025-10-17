@@ -132,7 +132,7 @@ const Employees = memo(() => {
 
   return (
     <div className="w-full">
-      <EditEmployee open={openEditModal} setOpen={setOpenEditModal} />
+      <EditEmployee open={openEditModal} setOpen={setOpenEditModal} isClient={false}/>
       <DeleteEmployee open={openDeleteModal} setOpen={setOpenDeleteModal} userId={selectedUserId} />
       <User open={openView} setOpen={setOpenViewk} />
 
